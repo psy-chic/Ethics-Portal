@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CFA Level I | Ethics Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;500;800&family=Lora:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --paper-white: #ffffff;
+            --ink-black: #1a1a1a;
+            --accent-green: #064e3b; 
+            --muted-gray: #64748b;
+            --border-light: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* PROFESSIONAL GRADIENT BACKGROUND WITH ANIMATION */
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Public Sans', sans-serif;
+            color: var(--ink-black);
+            line-height: 1.6;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Subtle ambient glow behind the box */
+        body::after {
+            content: "";
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        /* THE ORIGINAL BOX STRUCTURE YOU LOVED */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            background: var(--paper-white);
+            padding: 5rem;
+            border-radius: 2px;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* The green side-accent from the Swiss version */
+        .container::before {
+            content: "";
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 8px;
+            background: var(--accent-green);
+        }
+
+        .content-left {
+            border-right: 1px solid var(--border-light);
+            padding-right: 4rem;
+        }
+
+        .label {
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent-green);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .welcome-title {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--ink-black);
+            line-height: 1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .welcome-title span {
+            color: var(--muted-gray);
+            font-weight: 300;
+        }
+
+        .quote-block {
+            margin-top: 2rem;
+        }
+
+        #quote-text {
+            font-family: 'Lora', serif;
+            font-size: 1.25rem;
+            color: var(--muted-gray);
+            font-style: italic;
+            display: block;
+        }
+
+        #quote-author {
+            display: block;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--ink-black);
+        }
+
+        .content-right {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: var(--muted-gray);
+        }
+
+        .cta-button {
+            background: var(--ink-black);
+            color: white;
+            padding: 1.25rem 2rem;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            background: var(--accent-green);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .cta-button i {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover i {
+            transform: translateX(5px);
+        }
+
+        .developer-footer {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .developer-footer a {
+            color: #ffffff;
+            font-weight: 700;
+            text-decoration: none;
+            border-bottom: 1px solid var(--accent-green);
+        }
+
+        @media (max-width: 850px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 3rem 2rem;
+                gap: 2rem;
+            }
+            .content-left {
+                border-right: none;
+                padding-right: 0;
+            }
+            .welcome-title { font-size: 3rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="content-left">
+            <span class="label">Curriculum Master</span>
+            <h1 class="welcome-title">CFA<br><span>Ethics</span></h1>
+            <div class="quote-block">
+                <span id="quote-text">"Loading global standards..."</span>
+                <span id="quote-author"></span>
+            </div>
+        </div>
+
+        <div class="content-right">
+            <p class="description">
+                A streamlined environment for mastering Level I Ethics and Professional Standards. 
+                Designed for rigor, clarity, and retention.
+            </p>
+            <a href="dashboard.html" class="cta-button">
+                Access Curriculum <i class="fa-solid fa-arrow-right-long" style="margin-left: 10px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="developer-footer">
+        PROJECT BY <a href="https://www.linkedin.com/in/sahil-gaikwad-1953b0259/" target="_blank">SAHIL GAIKWAD</a>
+    </div>
+
+    <script>
+        const quotes = [
+            { text: "An investment in knowledge pays the best interest.", author: "Benjamin Franklin" },
+            { text: "Character is doing the right thing when nobody is looking.", author: "J.C. Watts" },
+            { text: "Ethics is the foundation of long-term value creation.", author: "Professional Standard" },
+            { text: "The reputation of a thousand years may be determined by the conduct of a single hour.", author: "Japanese Proverb" },
+            { text: "Integrity is the bedrock of the financial profession.", author: "Institutional Guideline" },
+            { text: "Risk comes from not knowing what you're doing.", author: "Warren Buffett" },
+            { text: "The stock market is filled with individuals who know the price of everything, but the value of nothing.", author: "Philip Fisher" },
+            { text: "In investing, what is comfortable is rarely profitable.", author: "Robert Arnott" },
+            { text: "The four most dangerous words in investing are: 'this time it's different.'", author: "Sir John Templeton" },
+            { text: "Know what you own, and know why you own it.", author: "Peter Lynch" },
+            { text: "The individual investor should act consistently as an investor and not as a speculator.", author: "Ben Graham" },
+            { text: "Price is what you pay. Value is what you get.", author: "Warren Buffett" },
+            { text: "It's not how much money you make, but how much money you keep.", author: "Robert Kiyosaki" },
+            { text: "The best investment you can make is in yourself.", author: "Warren Buffett" },
+            { text: "Compound interest is the eighth wonder of the world.", author: "Albert Einstein" },
+            { text: "Wide diversification is only required when investors do not understand what they are doing.", author: "Warren Buffett" },
+            { text: "Time is your friend; impulse is your enemy.", author: "John Bogle" },
+            { text: "Investing should be more like watching paint dry or watching grass grow.", author: "Paul Samuelson" },
+            { text: "The most important quality for an investor is temperament, not intellect.", author: "Warren Buffett" },
+            { text: "Opportunities come infrequently. When it rains gold, put out the bucket, not the thimble.", author: "Warren Buffett" }
+        ];
+
+        window.onload = () => {
+            const selected = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-text').innerText = `"${selected.text}"`;
+            document.getElementById('quote-author').innerText = `— ${selected.author}`;
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading 93 | Executive Study Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --vibrant-green: #10b981;
+            --paper-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 260px;
+        }
+
+        .light-mode {
+            --bg-primary: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #e2e8f0 100%);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --paper-bg: #ffffff;
+            --border-color: #cbd5e1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Public Sans', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: all 0.4s ease;
+            display: flex;
+        }
+
+        /* LEFT SIDEBAR NAVIGATION */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--vibrant-green);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            padding-left: 10px;
+        }
+
+        .nav-list { list-style: none; flex-grow: 1; }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s;
+            display: block;
+            padding: 8px 10px;
+            border-radius: 6px;
+        }
+
+        .nav-link:hover, .nav-item.active .nav-link {
+            color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Sidebar Progress Line */
+        .progress-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 0%;
+            background: var(--vibrant-green);
+            transition: 0.1s;
+        }
+
+        /* MAIN CONTENT AREA */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 2rem;
+        }
+
+        .document-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 4rem;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            border-radius: 4px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+        }
+
+        /* Top Controls */
+        .nav-controls {
+            position: fixed; top: 25px; right: 30px;
+            display: flex; gap: 12px; z-index: 1001;
+        }
+
+        .ctrl-btn {
+            width: 45px; height: 45px;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--text-main);
+            cursor: pointer; transition: 0.3s;
+        }
+        .ctrl-btn:hover { background: var(--vibrant-green); color: white; transform: scale(1.1); }
+
+        /* Typography */
+        .doc-header { text-align: center; margin-bottom: 3rem; }
+        h1 { font-size: 2.5rem; margin: 1rem 0; font-weight: 800; }
+        .section-divider { width: 120px; height: 5px; background: var(--vibrant-green); margin: 2rem auto; border-radius: 10px; }
+        
+        .los-block { margin-bottom: 5rem; scroll-margin-top: 100px; }
+        .los-header { font-weight: 800; color: var(--vibrant-green); border-bottom: 1px solid var(--vibrant-green); display: inline-block; margin-bottom: 1rem; font-size: 1.2rem; }
+        .los-requirement { font-size: 1.2rem; font-weight: 700; display: block; margin-bottom: 1.5rem; font-style: italic; }
+        .content-body { font-family: 'Lora', serif; font-size: 1.05rem; }
+        .content-body p { margin-bottom: 1.2rem; }
+        .content-body ul, .content-body ol { margin-left: 2rem; margin-bottom: 1.2rem; }
+        .content-body li { margin-bottom: 0.5rem; }
+        .content-body strong { color: var(--vibrant-green); }
+        
+        .highlight-quote {
+            border-left: 4px solid var(--vibrant-green);
+            padding: 1.5rem; margin: 2rem 0;
+            background: rgba(16, 185, 129, 0.05);
+            font-style: italic;
+        }
+
+        .case-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--vibrant-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .case-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--vibrant-green);
+            margin-bottom: 0.8rem;
+        }
+
+        .standard-header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--vibrant-green);
+            margin: 2.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--vibrant-green);
+        }
+
+        .key-concepts-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 2px solid var(--vibrant-green);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .concept-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .concept-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .concept-title {
+            font-weight: 700;
+            color: var(--vibrant-green);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .doc-footer {
+            margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);
+            text-align: center; font-size: 0.8rem; letter-spacing: 2px;
+        }
+        .doc-footer a { color: var(--vibrant-green); text-decoration: none; font-weight: 800; }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-box { background: var(--paper-bg); border: 1px solid var(--border-color); color: var(--text-main); width: 90%; max-width: 500px; padding: 3rem; border-radius: 8px; text-align: center; }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-wrapper { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div class="sidebar-header">Course Map</div>
+        <ul class="nav-list">
+            <li class="nav-item" data-section="intro"><a href="#intro" class="nav-link">Top of Reading</a></li>
+            <li class="nav-item" data-section="module-intro"><a href="#module-intro" class="nav-link">Module 93.1</a></li>
+            <li class="nav-item" data-section="standard-i"><a href="#standard-i" class="nav-link">Standard I</a></li>
+            <li class="nav-item" data-section="standard-ii"><a href="#standard-ii" class="nav-link">Standard II</a></li>
+            <li class="nav-item" data-section="standard-iii"><a href="#standard-iii" class="nav-link">Standard III</a></li>
+            <li class="nav-item" data-section="standard-iv"><a href="#standard-iv" class="nav-link">Standard IV</a></li>
+            <li class="nav-item" data-section="standard-v"><a href="#standard-v" class="nav-link">Standard V</a></li>
+            <li class="nav-item" data-section="standard-vi"><a href="#standard-vi" class="nav-link">Standard VI</a></li>
+            <li class="nav-item" data-section="standard-vii"><a href="#standard-vii" class="nav-link">Standard VII</a></li>
+            <li class="nav-item" data-section="key-concepts"><a href="#key-concepts" class="nav-link">Key Concepts</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="nav-controls">
+<a href="dashboard.html" class="ctrl-btn" title="Back to Dashboard"><i class="fa-solid fa-home"></i></a>
+            <div class="ctrl-btn" onclick="toggleTheme()"><i class="fa-solid fa-circle-half-stroke"></i></div>
+            <div class="ctrl-btn" onclick="openCalendar()"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="ctrl-btn" onclick="openAbout()"><i class="fa-solid fa-user-tie"></i></div>
+        </div>
+
+        <div class="document-container">
+            <header class="doc-header" id="intro">
+                <span style="font-weight: 800; font-size: 0.8rem; letter-spacing: 4px; color: var(--vibrant-green);">READING 93</span>
+                <h1>Ethics Application</h1>
+                <div class="section-divider"></div>
+            </header>
+
+            <!-- MODULE 93.1 INTRODUCTION -->
+            <section class="los-block" id="module-intro">
+                <span class="los-header">MODULE 93.1: ETHICS APPLICATION</span>
+                <div class="content-body">
+                    <div class="highlight-quote">
+                        <strong>LOS 93.a:</strong> Evaluate practices, policies, and conduct relative to the CFA Institute Code of Ethics and Standards of Professional Conduct.<br><br>
+                        <strong>LOS 93.b:</strong> Explain how the practices, policies, and conduct do or do not violate the CFA Institute Code of Ethics and Standards of Professional Conduct.
+                    </div>
+                    <p>This reading presents practical case studies that illustrate violations and compliance with the CFA Institute Code of Ethics and Standards of Professional Conduct. Each case demonstrates real-world scenarios where members and candidates must apply ethical judgment and professional standards.</p>
+                </div>
+            </section>
+
+            <!-- STANDARD I -->
+            <section class="los-block" id="standard-i">
+                <span class="los-header">STANDARD I: PROFESSIONALISM</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard I(A) Knowledge of the Law</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Overcharging Clients</div>
+                        <p>A member reports to his supervisor that their firm is overcharging clients by seeking to recover the cost of expenses that are actually reimbursable. The actions taken only remedy the situation for some clients but not for others.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> The member must dissociate from the activity and not work with any clients who are still being overcharged.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Money-Laundering Investigation</div>
+                        <p>A member violates the Standard by failing to investigate transactions in an account that appear to be at high risk of violating money-laundering laws (because it was a long-standing client who has relationships with board members).</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Members must comply with all applicable laws regardless of client relationships.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 3: Forging Signatures</div>
+                        <p>A member violates the Standards (and the law) by forging customer signatures for expediency.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a clear violation of both the Standards and the law.</p>
+                    </div>
+
+                    <div class="standard-header">Standard I(B) Independence and Objectivity</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Political Contributions</div>
+                        <p>A member violates the Standard by contributing to a politician's campaign, believing that it may lead to preferential treatment with regard to receiving management contracts for government pension fund money.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Such contributions compromise independence and objectivity.</p>
+                    </div>
+
+                    <div class="standard-header">Standard I(C) Misrepresentation</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Guaranteeing Returns</div>
+                        <p>A member violates the Standard by assuring a client that returns on a fund will outweigh the penalties incurred from shifting funds from an existing investment, essentially guaranteeing a specific rate of return on an investment that has no actual guarantee of returns.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Members cannot guarantee investment returns.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Personnel Changes</div>
+                        <p>A proposal to manage pension assets lists all personnel and their qualifications, but while the proposal is under consideration, one of the key personnel leaves the firm.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> The member is required to inform the potential client of this personnel change (misrepresentation by omission).</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 3: Social Media Misrepresentation</div>
+                        <p>A member who is the CEO of an electric car company posts on social media that private financing has been secured to take the company private at $420 per share when that is untrue and the member admits the price "was a joke."</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is clearly a violation of the Standard regarding misrepresentation.</p>
+                    </div>
+
+                    <div class="standard-header">Standard I(D) Misconduct</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Civil Disobedience</div>
+                        <p>A member is arrested for minor criminal offenses that are part of civil disobedience related to protesting and expressing her personal beliefs.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is not necessarily a violation of the Standard regarding misconduct, which states in part that members are prohibited from "engaging in any professional conduct involving dishonesty, fraud, or deceit" or committing an act that "reflects adversely on their professional reputation, integrity, or competence."</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Error-Correction Policy Abuse</div>
+                        <p>A member violates the Standard by using his firm's error-correction policy to effectively give his own money to a client account in order to make his management of the account look better.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation involving dishonest professional conduct.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STANDARD II -->
+            <section class="los-block" id="standard-ii">
+                <span class="los-header">STANDARD II: INTEGRITY OF CAPITAL MARKETS</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard II(A) Material Nonpublic Information</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Overheard Conversation</div>
+                        <p>A member violates the Standard by using material nonpublic information he acquired by overhearing a friend's phone conversation and inferring that a takeover offer for a specific company was imminent.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. The source of the information does not matter if it is material and nonpublic.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Selective Disclosure</div>
+                        <p>A member violates the Standard by sharing information with clients about a regulator's positive response to trials of a company's new drug that he learned of during a meeting of analysts with company management. The information is considered nonpublic because sharing it with a specific group of analysts was "selective sharing" of the information and cannot be considered public disclosure.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Selective disclosure to analysts does not make information public.</p>
+                    </div>
+
+                    <div class="standard-header">Standard II(B) Market Manipulation</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Fraudulent Shareholder List</div>
+                        <p>A member violates the Standard by fraudulently including the names of people who do not actually own shares to meet the minimum required number of shareholders for a firm to be listed on an exchange, misleading market participants about the potential liquidity of the shares.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. The intent is to mislead market participants.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STANDARD III -->
+            <section class="los-block" id="standard-iii">
+                <span class="los-header">STANDARD III: DUTIES TO CLIENTS</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard III(A) Loyalty, Prudence, and Care</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Opting Out of Standards</div>
+                        <p>A member violates the Standard by putting a policy into an investment firm's client agreements that indicates that their representatives are excused in some cases from acting in a client's best interest or failing to adequately investigate suitability of recommendations to clients, and that clients' rights to make claims for violating securities laws are restricted.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> Members and candidates cannot "opt out" of the Standards.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Self-Directed Accounts</div>
+                        <p>A member executes trades for a client who self-directs their own account and has received the firm's policies regarding margin requirements. In this case, the member's requirements to act in the client's best interests are limited, compared with a relationship in which the member is providing investment advice.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> There is no intent to limit the member's responsibilities to act in good faith and not misrepresent the services to be provided according to firm policies. The terms regarding the firm's actions in the event of a margin shortfall are open to negotiation at the inception of the relationship.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 3: Expense Allocation</div>
+                        <p>A member allocates expenses to a client that arise from actions designed to reduce total expenses (staying over a weekend to reduce transportation costs but increasing lodging costs).</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is not a violation, but charging a client for expenses that benefit other clients or that are for personal activities of the member is.</p>
+                    </div>
+
+                    <div class="standard-header">Standard III(B) Fair Dealing</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Tiered Service Levels</div>
+                        <p>A member treats clients fairly by simultaneously sending emails regarding a change in investment recommendation. Providing individual clients with updates or clarifications regarding the change in recommendation is not a violation. Further, the member's firm offers some clients, for an additional fee, weekly updates about securities that may indicate a change in recommendation may be forthcoming.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is not a violation as long as clients are all informed about the availability of the weekly updates for a fee and as long as no change in recommendation is included in a weekly update that would disadvantage clients who do not subscribe to the additional service.</p>
+                    </div>
+
+                    <div class="standard-header">Standard III(C) Suitability</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Unsuitable Risk Level</div>
+                        <p>A member violates the Standard by recommending investments that carry more risk than is suitable for some clients, even though there are tax advantages to the recommended portfolios.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Suitability must be assessed based on the client's risk tolerance, not just tax benefits.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Client-Requested Changes</div>
+                        <p>A member violates the Standard by making a client-requested change to their portfolio without investigating the client circumstances adequately to determine whether the requested investment is suitable for the clients.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Even for client-requested changes, members must assess suitability.</p>
+                    </div>
+
+                    <div class="standard-header">Standard III(D) Performance Presentation</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Misleading Performance History</div>
+                        <p>A member violates the Standard by presenting performance data based on a composite of separately managed accounts the firm managed before creating the fund that is being reported, giving the impression that the fund has been in existence for many years when, in fact, it is relatively new.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Performance presentation must not mislead clients about the fund's actual history.</p>
+                    </div>
+
+                    <div class="standard-header">Standard III(E) Preservation of Confidentiality</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Data Security Breach</div>
+                        <p>Member A downloads clients' personally identifiable information to his personal server at home to make working from home easier and gets hacked. The member has violated the Standard by not taking adequate steps to protect client information. Member B, who is the firm's head of compliance, likely violated the Standard by not taking the proper steps to protect client information, as evidenced by the fact that Member A was able to download sensitive client information to his personal server.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> Both members violated the Standard through inadequate protection of confidential client information.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STANDARD IV -->
+            <section class="los-block" id="standard-iv">
+                <span class="los-header">STANDARD IV: DUTIES TO EMPLOYERS</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard IV(A) Loyalty</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Harmful Statements About Current Employer</div>
+                        <p>A member violates the Standard by making harmful statements about Firm A, her current employer, and promoting the firm that she intends to move to while she is still employed by Firm A.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Members must act in their employer's best interest while still employed.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Whistleblowing</div>
+                        <p>A member is pressured by his firm to sell the firm's proprietary investment products that are relatively expensive and haven't performed well. He has complained to management, and they have done nothing. He copies client records and he records conversations with his supervisor to document his conduct. He takes this information to securities regulators.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> His actions are not a violation of the Standard because he is acting in the interest of his clients.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 3: Taking Client Information</div>
+                        <p>A member violates the Standard by taking client information with her when she leaves her firm; the client list is the property of her current firm. Although she only intends to send her clients thank-you notes, the client list she copied has personal information.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Client lists are employer property.</p>
+                    </div>
+
+                    <div class="standard-header">Standard IV(B) Additional Compensation Arrangements</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Issuer-Paid Research Bonus</div>
+                        <p>A member works for a firm that produces issuer-paid research reports and is involved with the decision of which companies her firm will cover. Some companies seeking coverage by the firm offer her a bonus payment if their firm is selected.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> Because this creates a possible conflict between her interests and her firm's interests, she must get approval in writing from her employer to accept the bonus arrangement.</p>
+                    </div>
+
+                    <div class="standard-header">Standard IV(C) Responsibilities of Supervisors</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Inadequate Supervision</div>
+                        <p>A member with supervisory responsibility over a branch office violates the Standard by not making reasonable efforts to ensure that those under his supervision are not engaging in misconduct. He also violates the Standard by not having clear written compliance policies and procedures in place, along with employee training.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> If these are not in place, he must decline supervisory responsibility.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Chief Compliance Officer Without Authority</div>
+                        <p>A member violates the Standard by accepting the title of chief compliance officer even though she has no experience in compliance, is denied permission to contact clients or review client communications, and is not allowed to enforce company policies.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> She is in violation of the Standard because it requires her to make reasonable efforts to both detect and prevent violations of laws, rules, and regulations by those subject to her supervision. Knowing she could not do this, she should have declined to take on supervisory responsibilities.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STANDARD V -->
+            <section class="los-block" id="standard-v">
+                <span class="los-header">STANDARD V: INVESTMENT ANALYSIS, RECOMMENDATIONS, AND ACTIONS</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard V(A) Diligence and Reasonable Basis</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Inadequate Analysis</div>
+                        <p>A member violates the Standard by recommending the purchase of shares of a company for which he has not performed a diligent, thorough, and independent analysis. A second member bases her recommendation on the analysis of the first member and incorporates part of the first member's research report in her own and is thereby also in violation of the Standards.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> Both members violated the Standard. Each member must conduct their own diligent analysis.</p>
+                    </div>
+
+                    <div class="standard-header">Standard V(B) Communication With Clients and Prospective Clients</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Fee Calculation Changes</div>
+                        <p>A member's firm begins calculating client fees using different methods from those spelled out in the disclosures made to them when they opened their accounts.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> The member is required by the Standard to inform clients that the fee calculation methods have changed, prior to changing the methods, even if fees are not higher overall using the new processes.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Rating Methodology Change</div>
+                        <p>A credit rating agency changes its methodology of determining the ratings of commercial mortgage-backed securities without disclosing the change to potential users of the ratings. A member who is responsible for publishing the ratings violates the Standard by publishing ratings without disclosing the change in methodology.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Material changes in methodology must be disclosed.</p>
+                    </div>
+
+                    <div class="standard-header">Standard V(C) Record Retention</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Failure to Update Records</div>
+                        <p>A member violates the Standard by not updating client records in a timely manner. Although he keeps himself updated on changes in client circumstances and adjusts portfolios accordingly, he does not do a good job of keeping written client profiles up to date.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Written records must be maintained and updated.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STANDARD VI -->
+            <section class="los-block" id="standard-vi">
+                <span class="los-header">STANDARD VI: CONFLICTS OF INTEREST</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard VI(A) Disclosure of Conflicts</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Third-Party Subadvisor Payments</div>
+                        <p>A member receives payment from third-party subadvisors that she uses to manage client funds invested in some asset classes.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> To avoid violating the Standard, she must disclose these arrangements to clients because the payments may influence her choice of subadvisors.</p>
+                    </div>
+
+                    <div class="standard-header">Standard VI(B) Priority of Transactions</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Front-Running Client Trades</div>
+                        <p>A member violates the Standard by buying shares and call options in his personal account just prior to purchasing large blocks of the same stocks in client accounts (front-running the trades), in anticipation of an increase in the price of the stocks as a result of the large purchases.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Personal trades must not disadvantage clients.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 2: Tipping Friends and Relatives</div>
+                        <p>A member violates the Standard by telling friends and relatives about large buy orders he is to execute for clients of his employer prior to executing those orders, allowing them to front-run those trades for quick profits.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Information about pending client trades must remain confidential.</p>
+                    </div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 3: Trade Allocation Abuse</div>
+                        <p>A member enters client trades grouped as block orders and allocates them to specific client accounts after the market closes for the day. The member violates the Standard (and likely the Standard on fair dealing as well) by allocating profitable trades to personal accounts and allocating a disproportionate amount of losing trades to his largest client accounts where they will likely go unnoticed.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> This is a violation. Trade allocation must be fair and equitable.</p>
+                    </div>
+
+                    <div class="standard-header">Standard VI(C) Referral Fees</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Undisclosed Client Rewards</div>
+                        <p>A member invites existing clients who have referred very profitable accounts to her to lavish parties, rewarding them with discounts on fees and gift cards as well.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> The member violates the Standard by not disclosing these "referral fees" to all existing clients and prospective clients.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- STANDARD VII -->
+            <section class="los-block" id="standard-vii">
+                <span class="los-header">STANDARD VII: RESPONSIBILITIES AS A CFA INSTITUTE MEMBER OR CFA CANDIDATE</span>
+                <div class="content-body">
+
+                    <div class="standard-header">Standard VII(A) Conduct as Participants in CFA Institute Programs</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Post-Exam Discussion</div>
+                        <p>A member who teaches exam-prep classes hosts a post-exam party for candidates who took the exam. He solicits their general impressions about the difficulty of the exam and their opinions on the most difficult exam questions.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> He is permitted to share their opinions about the difficulty of the exam with future candidates in his exam-prep classes. However, he is not permitted to solicit or share any information about specific exam questions or about which topics were or were not tested on the exam.</p>
+                    </div>
+
+                    <div class="standard-header">Standard VII(B) Reference to CFA Institute, the CFA Designation, and the CFA Program</div>
+
+                    <div class="case-box">
+                        <div class="case-title">Case 1: Lapsed Membership</div>
+                        <p>A previous member who has not paid her dues to CFA Institute violates the Standard by using the CFA designation in marketing materials and on her business cards. Another member violates the Standard by claiming that all senior employees, which includes the member who has not paid her dues, are CFA charterholders.</p>
+                        <p style="margin-top: 1rem;"><strong>Outcome:</strong> Both are violations. Only current members in good standing may use the CFA designation.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KEY CONCEPTS -->
+            <section class="los-block" id="key-concepts">
+                <span class="los-header">KEY CONCEPTS</span>
+                <div class="content-body">
+                    <div class="key-concepts-box">
+                        <div class="concept-item">
+                            <div class="concept-title">Application of Ethics Standards</div>
+                            <p>The case studies in this reading demonstrate that ethical violations can occur in various contexts and situations. Members and candidates must constantly evaluate their actions against the Code and Standards, considering not just the letter but also the spirit of the requirements.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">Common Violation Patterns</div>
+                            <p>Several recurring themes emerge from these cases: conflicts of interest that are not properly disclosed, inadequate due diligence in investment recommendations, failure to act in clients' best interests, misuse of confidential information, and attempts to circumvent professional responsibilities through inadequate policies or procedures.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">Client Interests First</div>
+                            <p>A central theme across multiple standards is the primacy of client interests. Whether dealing with suitability, fair dealing, loyalty, or priority of transactions, members must always place client interests ahead of their own or their employer's interests (except when employer interests align with legal and ethical requirements).</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">Disclosure and Transparency</div>
+                            <p>Many violations can be prevented through proper disclosure. Conflicts of interest, changes in methodologies, additional compensation arrangements, and referral fees all require clear, timely disclosure to affected parties. Transparency is fundamental to maintaining trust in the investment profession.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">Professional Judgment</div>
+                            <p>The cases illustrate that compliance with the Standards often requires nuanced professional judgment. What constitutes "reasonable" efforts, "adequate" basis, or "material" information depends on the specific circumstances. Members must develop the judgment to apply principles appropriately in diverse situations.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">No "Opting Out"</div>
+                            <p>A critical principle demonstrated in these cases is that members and candidates cannot opt out of their responsibilities under the Code and Standards through contractual agreements or firm policies. The Standards set minimum requirements that apply regardless of other arrangements.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">Supervisory Responsibilities</div>
+                            <p>Those in supervisory positions have heightened responsibilities. They must ensure adequate compliance systems are in place, provide proper training and oversight, and take action when violations are detected. Accepting a supervisory title without the authority or resources to fulfill the role is itself a violation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="doc-footer">
+                PROJECT BY <a href="https://www.linkedin.com/in/sahil-gaikwad-1953b0259/" target="_blank">SAHIL GAIKWAD</a>
+            </footer>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aboutModal" onclick="closeModals()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 style="color:var(--vibrant-green); margin-bottom: 1rem;">Candidate Excellence</h2>
+            <p style="margin-bottom: 2rem; line-height: 1.8;">"This platform is made to help my fellow candidates to study and learn more efficiently and in highest ever quality."</p>
+            <p style="font-weight: 800; letter-spacing: 2px;">BY SAHIL GAIKWAD</p>
+            <div onclick="closeModals()" style="margin-top: 2rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ DISMISS ]</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="calModal" onclick="closeModals()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 id="calTitle" style="color:var(--vibrant-green); margin-bottom: 1rem;">Date</h2>
+            <p id="calDate" style="font-weight: 800; margin-bottom: 1.5rem;"></p>
+            <textarea style="width:100%; height:80px; padding:10px; border: 1px solid var(--border-color); color:inherit; background:transparent;" placeholder="Enter notes..."></textarea>
+            <div onclick="closeModals()" style="margin-top: 1rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ SAVE ]</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() { document.body.classList.toggle('light-mode'); }
+        function openAbout() { document.getElementById('aboutModal').style.display = 'flex'; }
+        function openCalendar() { 
+            document.getElementById('calModal').style.display = 'flex'; 
+            document.getElementById('calDate').innerText = new Date().toDateString();
+            document.getElementById('calTitle').innerText = new Date().toLocaleString('default', { month: 'long' });
+        }
+        function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+        // PROGRESS BAR & ACTIVE SECTION LOGIC
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.height = scrolled + "%";
+
+            // Highlight active link in sidebar
+            const sections = document.querySelectorAll('.los-block, .doc-header');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

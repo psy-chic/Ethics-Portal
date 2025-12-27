@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading 92 | Executive Study Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --vibrant-green: #10b981;
+            --paper-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 260px;
+        }
+
+        .light-mode {
+            --bg-primary: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #e2e8f0 100%);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --paper-bg: #ffffff;
+            --border-color: #cbd5e1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Public Sans', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: all 0.4s ease;
+            display: flex;
+        }
+
+        /* LEFT SIDEBAR NAVIGATION */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--vibrant-green);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            padding-left: 10px;
+        }
+
+        .nav-list { list-style: none; flex-grow: 1; }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s;
+            display: block;
+            padding: 8px 10px;
+            border-radius: 6px;
+        }
+
+        .nav-link:hover, .nav-item.active .nav-link {
+            color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Sidebar Progress Line */
+        .progress-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 0%;
+            background: var(--vibrant-green);
+            transition: 0.1s;
+        }
+
+        /* MAIN CONTENT AREA */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 2rem;
+        }
+
+        .document-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 4rem;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            border-radius: 4px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+        }
+
+        /* Top Controls */
+        .nav-controls {
+            position: fixed; top: 25px; right: 30px;
+            display: flex; gap: 12px; z-index: 1001;
+        }
+
+        .ctrl-btn {
+            width: 45px; height: 45px;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--text-main);
+            cursor: pointer; transition: 0.3s;
+        }
+        .ctrl-btn:hover { background: var(--vibrant-green); color: white; transform: scale(1.1); }
+
+        /* Typography */
+        .doc-header { text-align: center; margin-bottom: 3rem; }
+        h1 { font-size: 2.5rem; margin: 1rem 0; font-weight: 800; }
+        .section-divider { width: 120px; height: 5px; background: var(--vibrant-green); margin: 2rem auto; border-radius: 10px; }
+        
+        .los-block { margin-bottom: 5rem; scroll-margin-top: 100px; }
+        .los-header { font-weight: 800; color: var(--vibrant-green); border-bottom: 1px solid var(--vibrant-green); display: inline-block; margin-bottom: 1rem; font-size: 1.2rem; }
+        .los-requirement { font-size: 1.2rem; font-weight: 700; display: block; margin-bottom: 1.5rem; font-style: italic; }
+        .content-body { font-family: 'Lora', serif; font-size: 1.05rem; }
+        .content-body p { margin-bottom: 1.2rem; }
+        .content-body ul, .content-body ol { margin-left: 2rem; margin-bottom: 1.2rem; }
+        .content-body li { margin-bottom: 0.5rem; }
+        .content-body strong { color: var(--vibrant-green); }
+        
+        .highlight-quote {
+            border-left: 4px solid var(--vibrant-green);
+            padding: 1.5rem; margin: 2rem 0;
+            background: rgba(16, 185, 129, 0.05);
+            font-style: italic;
+        }
+
+        .standard-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--vibrant-green);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .standard-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--vibrant-green);
+            margin-bottom: 0.8rem;
+        }
+
+        .key-concepts-box {
+            background: rgba(16, 185, 129, 0.08);
+            border: 2px solid var(--vibrant-green);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .concept-item {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .concept-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .concept-title {
+            font-weight: 700;
+            color: var(--vibrant-green);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .doc-footer {
+            margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border-color);
+            text-align: center; font-size: 0.8rem; letter-spacing: 2px;
+        }
+        .doc-footer a { color: var(--vibrant-green); text-decoration: none; font-weight: 800; }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.92); backdrop-filter: blur(10px);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-box { background: var(--paper-bg); border: 1px solid var(--border-color); color: var(--text-main); width: 90%; max-width: 500px; padding: 3rem; border-radius: 8px; text-align: center; }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .main-wrapper { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+        <div class="sidebar-header">Course Map</div>
+        <ul class="nav-list">
+            <li class="nav-item" data-section="intro"><a href="#intro" class="nav-link">Top of Reading</a></li>
+            <li class="nav-item" data-section="module-intro"><a href="#module-intro" class="nav-link">Module 92.1</a></li>
+            <li class="nav-item" data-section="los-a"><a href="#los-a" class="nav-link">LOS 92.a: Why GIPS</a></li>
+            <li class="nav-item" data-section="los-b"><a href="#los-b" class="nav-link">LOS 92.b: Key Concepts</a></li>
+            <li class="nav-item" data-section="los-c"><a href="#los-c" class="nav-link">LOS 92.c: Composites</a></li>
+            <li class="nav-item" data-section="los-d"><a href="#los-d" class="nav-link">LOS 92.d: Compliance</a></li>
+            <li class="nav-item" data-section="los-e"><a href="#los-e" class="nav-link">LOS 92.e: Verification</a></li>
+            <li class="nav-item" data-section="key-concepts"><a href="#key-concepts" class="nav-link">Key Concepts</a></li>
+        </ul>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="nav-controls">
+<a href="dashboard.html" class="ctrl-btn" title="Back to Dashboard"><i class="fa-solid fa-home"></i></a>
+            <div class="ctrl-btn" onclick="toggleTheme()"><i class="fa-solid fa-circle-half-stroke"></i></div>
+            <div class="ctrl-btn" onclick="openCalendar()"><i class="fa-solid fa-calendar-days"></i></div>
+            <div class="ctrl-btn" onclick="openAbout()"><i class="fa-solid fa-user-tie"></i></div>
+        </div>
+
+        <div class="document-container">
+            <header class="doc-header" id="intro">
+                <span style="font-weight: 800; font-size: 0.8rem; letter-spacing: 4px; color: var(--vibrant-green);">READING 92</span>
+                <h1>Introduction to the Global Investment Performance Standards (GIPS)</h1>
+                <div class="section-divider"></div>
+            </header>
+
+            <!-- MODULE 92.1 INTRODUCTION -->
+            <section class="los-block" id="module-intro">
+                <span class="los-header">MODULE 92.1: INTRODUCTION TO GIPS</span>
+                <div class="content-body">
+                    <p>The Global Investment Performance Standards (GIPS) provide a standardized, industry-wide approach to the calculation and presentation of investment performance. These standards are designed to promote full disclosure and fair representation of investment performance results.</p>
+                </div>
+            </section>
+
+            <!-- LOS 92.a -->
+            <section class="los-block" id="los-a">
+                <span class="los-header">LOS 92.a</span>
+                <span class="los-requirement">Explain why the GIPS standards were created, who can claim compliance, and who benefits from compliance.</span>
+                <div class="content-body">
+                    <p>When firms choose their own methodologies for reporting investment performance, the results are not comparable across firms, and firms have a tendency to choose a methodology that makes their performance look good.</p>
+
+                    <div class="standard-box">
+                        <div class="standard-title">Common Practices That Bias Performance Results:</div>
+                        <ul>
+                            <li>Choosing a top-performing portfolio and claiming it represents a firm's overall results for all assets managed</li>
+                            <li>Excluding terminated accounts, which may tend to be accounts closed by investors due to sub-par performance</li>
+                            <li>Selecting time periods to report that put firm performance in the best possible light</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-quote">
+                        <strong>Purpose of GIPS:</strong> GIPS present a standardized methodology for performance reporting that makes comparison of performance across firms meaningful, provides specific information that is useful to current clients, prospective clients, and investors, and avoids misrepresentation of performance.
+                    </div>
+
+                    <p><strong>Benefits of GIPS:</strong></p>
+                    <ul>
+                        <li>Widespread usage of GIPS can give oversight bodies a clearer understanding of the returns achieved and the risks taken by the firms they supervise</li>
+                        <li>Clients can more easily compare investment performance among investment firms</li>
+                        <li>Increased confidence in reported performance data</li>
+                        <li>Greater transparency and standardization across the industry</li>
+                    </ul>
+
+                    <div class="standard-box">
+                        <div class="standard-title">Who Can Claim Compliance:</div>
+                        <p>GIPS only apply to <strong>firms that manage assets for others</strong>. Presenting performance information compliant with GIPS is <strong>voluntary</strong> for such firms, and they may only claim compliance with GIPS if they comply <strong>fully and on a firmwide basis</strong>.</p>
+                        <p style="margin-top: 1rem;">Other firms related to the asset management business, such as software developers, may state that they <strong>endorse GIPS</strong> but may <strong>not claim compliance</strong> with GIPS.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOS 92.b -->
+            <section class="los-block" id="los-b">
+                <span class="los-header">LOS 92.b</span>
+                <span class="los-requirement">Describe the key concepts of the GIPS Standards for Firms.</span>
+                <div class="content-body">
+                    <p>The GIPS standards for firms consist of eight sections, each addressing critical aspects of performance reporting and compliance:</p>
+
+                    <div class="standard-box">
+                        <div class="standard-title">1. Fundamentals of Compliance</div>
+                        <p>The fundamental issues involved in complying with GIPS are:</p>
+                        <ul>
+                            <li><strong>(a) Defining the firm</strong> - establishing the boundaries of the reporting entity</li>
+                            <li><strong>(b) Providing GIPS-compliant reports</strong> to all clients and prospects</li>
+                            <li><strong>(c) Complying with applicable regulations and laws</strong></li>
+                            <li><strong>(d) Presenting information</strong> that is neither false nor misleading</li>
+                        </ul>
+                    </div>
+
+                    <div class="standard-box">
+                        <div class="standard-title">2. Input Data and Calculation Methodology</div>
+                        <p>Input data should be consistent in order to establish full, fair, and comparable investment performance presentations.</p>
+                        <ul>
+                            <li>Certain methodologies are <strong>required for portfolio return calculations</strong></li>
+                            <li>Certain other methodologies are <strong>required for composite return calculations</strong></li>
+                            <li>Uniformity in methods across firms is required so that their results are comparable</li>
+                        </ul>
+                    </div>
+
+                    <div class="standard-box">
+                        <div class="standard-title">3. Composite and Pooled Fund Maintenance</div>
+                        <p>Creation of meaningful, asset-weighted composites is important to achieve a fair presentation.</p>
+                        <ul>
+                            <li><strong>Composite performance</strong> is based on the performance of one or more portfolios that have the same investment strategy or investment objective</li>
+                            <li><strong>Composite returns</strong> are the asset-weighted average (not a simple average) of the returns on the portfolios that are included in each composite</li>
+                            <li>Pooled funds must be included in a composite if they fit its definition</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-quote">
+                        <strong>Sections 4 through 7: Performance Reporting Requirements</strong><br><br>
+                        <strong>4. Composite Time-Weighted Return Report</strong><br>
+                        <strong>5. Composite Money-Weighted Return Report</strong><br>
+                        <strong>6. Pooled Fund Time-Weighted Return Report</strong><br>
+                        <strong>7. Pooled Fund Money-Weighted Return Report</strong><br><br>
+                        These sections contain required and recommended procedures for reporting the performance of composites and pooled funds, as well as the necessary disclosures.
+                    </div>
+
+                    <p><strong>Disclosure Requirements:</strong></p>
+                    <ul>
+                        <li>There are some disclosures that all firms must make</li>
+                        <li>Some disclosures may not apply to all firms</li>
+                        <li>If a disclosure is not applicable to a specific firm, the firm is not required to include any statement regarding it</li>
+                        <li>A firm that has met all the requirements of GIPS may include an appropriate claim of compliance</li>
+                    </ul>
+
+                    <div class="standard-box">
+                        <div class="standard-title">8. GIPS Advertising Guidelines</div>
+                        <p>If an advertisement includes a claim of compliance with GIPS, the advertisement must comply with these guidelines.</p>
+                        <p style="margin-top: 1rem;"><strong>Important Note:</strong> The guidelines do not apply to advertisements that do not reference the firm's GIPS compliance.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOS 92.c -->
+            <section class="los-block" id="los-c">
+                <span class="los-header">LOS 92.c</span>
+                <span class="los-requirement">Explain the purpose of composites in performance reporting.</span>
+                <div class="content-body">
+                    <div class="highlight-quote">
+                        A <strong>composite</strong> is a grouping of individual discretionary portfolios representing a similar investment strategy, objective, or mandate.
+                    </div>
+
+                    <p><strong>Examples of Possible Composites:</strong></p>
+                    <ul>
+                        <li>Large capitalization stocks</li>
+                        <li>Investment-grade domestic bonds</li>
+                        <li>Accounts managed to match the performance of a specific securities index</li>
+                        <li>International equities</li>
+                        <li>Small-cap growth strategies</li>
+                    </ul>
+
+                    <p><strong>Purpose and Benefits:</strong></p>
+                    <p>Reporting on the performance of composites gives clients and prospects information about the firm's success in managing various types of securities and results for various investment styles. This allows for meaningful comparison of a firm's capabilities across different asset classes and strategies.</p>
+
+                    <div class="standard-box">
+                        <div class="standard-title">Composite Construction Requirements:</div>
+                        <p>A composite, such as international equities, must include <strong>all fee-paying, discretionary portfolios</strong> (current and past) that the firm has managed in accordance with a particular strategy.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Critical Rule:</strong> The firm should identify which composite each managed portfolio is to be included in <strong>before the portfolio's performance is known</strong>.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Purpose:</strong> This prevents firms from choosing portfolios to include in a composite in order to create composites with superior returns.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Coverage Requirement:</strong> All fee-paying discretionary portfolios managed by the firm must be included in at least one composite.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOS 92.d -->
+            <section class="los-block" id="los-d">
+                <span class="los-header">LOS 92.d</span>
+                <span class="los-requirement">Describe the fundamentals of compliance, including the recommendations of the GIPS standards with respect to the definition of the firm and the firm's definition of discretion.</span>
+                <div class="content-body">
+                    <div class="standard-box">
+                        <div class="standard-title">Definition of the Firm</div>
+                        <p>The definition of the firm, for purposes of GIPS compliance, must be <strong>the corporation, subsidiary, or division that is held out to clients as a business entity</strong>.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Example:</strong> If a firm has different geographic locations (e.g., all doing business under the name of Bluestone Advisers), then the definition of the firm should include all the various geographic locations and their clients.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Key Principle:</strong> The firm definition must reflect how the firm is presented to clients and prospects, ensuring that compliance encompasses the entire business entity that provides investment management services.</p>
+                    </div>
+
+                    <div class="standard-box">
+                        <div class="standard-title">Definition of Discretion</div>
+                        <p>The definition of discretion refers to how a firm determines which of the portfolios it manages should be included in a composite.</p>
+                        
+                        <p style="margin-top: 1rem;">A firm may determine that a portfolio is <strong>nondiscretionary</strong>—and therefore not include it in a composite—if the client places restrictions on it that prevent the manager from carrying out the intended strategy.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Discretionary Portfolios:</strong> Those where the firm has the authority to implement the investment strategy without client approval for each transaction.</p>
+                        
+                        <p style="margin-top: 1rem;"><strong>Nondiscretionary Portfolios:</strong> Those where client-imposed constraints prevent full implementation of the firm's intended strategy, making performance comparison inappropriate.</p>
+                    </div>
+
+                    <div class="highlight-quote">
+                        <strong>Critical Compliance Requirement:</strong> Firms must establish and document clear, objective criteria for determining which portfolios are considered discretionary versus nondiscretionary. This determination must be made consistently across all portfolios and applied prospectively.
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOS 92.e -->
+            <section class="los-block" id="los-e">
+                <span class="los-header">LOS 92.e</span>
+                <span class="los-requirement">Describe the concept of independent verification.</span>
+                <div class="content-body">
+                    <p>Firms are <strong>encouraged</strong> to pursue independent verification of their compliance with GIPS. Verification applies to the <strong>entire firm's</strong> performance measurement practices and methods, not a selected composite.</p>
+
+                    <div class="standard-box">
+                        <div class="standard-title">Verification Requirements:</div>
+                        <p>If a firm chooses to pursue verification, it must meet the following criteria:</p>
+                        <ul>
+                            <li><strong>Performed by a third party</strong> - not by the firm itself</li>
+                            <li><strong>On a firmwide basis</strong> - covers all composites and portfolios</li>
+                            <li>Cannot be performed on individual composites only</li>
+                        </ul>
+                    </div>
+
+                    <div class="standard-box">
+                        <div class="standard-title">What the Third-Party Verifier Must Attest To:</div>
+                        <ol>
+                            <li>The firm has complied with all GIPS requirements for composite construction on a firmwide basis, AND</li>
+                            <li>The firm's processes and procedures are established to present performance in accordance with:
+                                <ul style="margin-left: 2rem; margin-top: 0.5rem;">
+                                    <li>The calculation methodology required by GIPS</li>
+                                    <li>The data requirements of GIPS</li>
+                                    <li>The format required by GIPS</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="highlight-quote">
+                        <strong>Disclosure Language for Verified Firms:</strong><br><br>
+                        Verified firms should include the following disclosure language:<br><br>
+                        <em>"[Insert name of firm] has been verified for the periods [insert dates] by [name of verifier]. A copy of the verification report is available upon request."</em>
+                    </div>
+
+                    <p><strong>Important Notes on Verification:</strong></p>
+                    <ul>
+                        <li>Verification is <strong>voluntary</strong>, not mandatory for GIPS compliance</li>
+                        <li>Verification provides additional credibility to performance claims</li>
+                        <li>The verification report must cover the entire firm, not selective composites</li>
+                        <li>Firms can claim GIPS compliance without verification, but verification adds an extra layer of assurance</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- KEY CONCEPTS -->
+            <section class="los-block" id="key-concepts">
+                <span class="los-header">KEY CONCEPTS</span>
+                <div class="content-body">
+                    <div class="key-concepts-box">
+                        <div class="concept-item">
+                            <div class="concept-title">LOS 92.a</div>
+                            <p>GIPS are principles that investment firms can voluntarily follow. They are designed to avoid misrepresentations of historical investment results to clients and prospects. GIPS allow clients to more easily compare investment performance among investment firms and have more confidence in reported performance.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">LOS 92.b</div>
+                            <p>The eight sections of the GIPS standards for firms are:</p>
+                            <ol>
+                                <li>Fundamentals of Compliance</li>
+                                <li>Input Data and Calculation Methodology</li>
+                                <li>Composite and Pooled Fund Maintenance</li>
+                                <li>Composite Time-Weighted Return Report</li>
+                                <li>Composite Money-Weighted Return Report</li>
+                                <li>Pooled Fund Time-Weighted Return Report</li>
+                                <li>Pooled Fund Money-Weighted Return Report</li>
+                                <li>GIPS Advertising Guidelines</li>
+                            </ol>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">LOS 92.c</div>
+                            <p>A composite is a grouping of discretionary portfolios representing a similar investment strategy, objective, or mandate. A composite must include all portfolios (current and past) that the firm has managed in accordance with this particular strategy. The firm should identify which composite each managed portfolio is to be included in before the portfolio's performance is known.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">LOS 92.d</div>
+                            <p>GIPS compliance must be firmwide, where the firm is the distinct business entity that is held out to clients and prospects. A firm must establish criteria to determine which of the portfolios it manages are discretionary or nondiscretionary.</p>
+                        </div>
+
+                        <div class="concept-item">
+                            <div class="concept-title">LOS 92.e</div>
+                            <p>Firms are encouraged to pursue independent verification of GIPS compliance. If they seek verification, it must be performed by a third party, not by the firm itself. The third-party verifier must attest that (1) the firm has complied with all GIPS requirements for composite construction on a firmwide basis and (2) the firm's processes and procedures are established to present performance in accordance with the calculation methodology required by GIPS, the data requirements of GIPS, and in the format required by GIPS.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="doc-footer">
+                PROJECT BY <a href="https://www.linkedin.com/in/sahil-gaikwad-1953b0259/" target="_blank">SAHIL GAIKWAD</a>
+            </footer>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="aboutModal" onclick="closeModals()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 style="color:var(--vibrant-green); margin-bottom: 1rem;">Candidate Excellence</h2>
+            <p style="margin-bottom: 2rem; line-height: 1.8;">"This platform is made to help my fellow candidates to study and learn more efficiently and in highest ever quality."</p>
+            <p style="font-weight: 800; letter-spacing: 2px;">BY SAHIL GAIKWAD</p>
+            <div onclick="closeModals()" style="margin-top: 2rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ DISMISS ]</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="calModal" onclick="closeModals()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 id="calTitle" style="color:var(--vibrant-green); margin-bottom: 1rem;">Date</h2>
+            <p id="calDate" style="font-weight: 800; margin-bottom: 1.5rem;"></p>
+            <textarea style="width:100%; height:80px; padding:10px; border: 1px solid var(--border-color); color:inherit; background:transparent;" placeholder="Enter notes..."></textarea>
+            <div onclick="closeModals()" style="margin-top: 1rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ SAVE ]</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() { document.body.classList.toggle('light-mode'); }
+        function openAbout() { document.getElementById('aboutModal').style.display = 'flex'; }
+        function openCalendar() { 
+            document.getElementById('calModal').style.display = 'flex'; 
+            document.getElementById('calDate').innerText = new Date().toDateString();
+            document.getElementById('calTitle').innerText = new Date().toLocaleString('default', { month: 'long' });
+        }
+        function closeModals() { document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); }
+
+        // PROGRESS BAR & ACTIVE SECTION LOGIC
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.height = scrolled + "%";
+
+            // Highlight active link in sidebar
+            const sections = document.querySelectorAll('.los-block, .doc-header');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethics Test | Executive Study Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0f172a;
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --vibrant-green: #10b981;
+            --paper-bg: rgba(255, 255, 255, 0.05);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --sidebar-width: 260px;
+        }
+
+        .light-mode {
+            --bg-primary: #f8fafc;
+            --bg-gradient: linear-gradient(135deg, #f0fdf4 0%, #e2e8f0 100%);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --paper-bg: #ffffff;
+            --border-color: #cbd5e1;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Public Sans', sans-serif;
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: all 0.4s ease;
+            display: flex;
+        }
+
+        /* LEFT SIDEBAR NAVIGATION */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            font-weight: 800;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            color: var(--vibrant-green);
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            padding-left: 10px;
+        }
+
+        .nav-list { list-style: none; flex-grow: 1; }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: 0.3s;
+            display: block;
+            padding: 8px 10px;
+            border-radius: 6px;
+        }
+
+        .nav-link:hover, .nav-item.active .nav-link {
+            color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        /* Sidebar Progress Line */
+        .progress-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--border-color);
+            border-radius: 10px;
+        }
+
+        #progress-bar {
+            width: 100%;
+            height: 0%;
+            background: var(--vibrant-green);
+            transition: 0.1s;
+        }
+
+        /* MAIN CONTENT AREA */
+        .main-wrapper {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 2rem;
+        }
+
+        .document-container {
+            max-width: 900px;
+            margin: 4rem auto;
+            padding: 4rem;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(20px);
+            border-radius: 4px;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
+        }
+
+        /* Top Controls */
+        .nav-controls {
+            position: fixed; top: 25px; right: 30px;
+            display: flex; gap: 12px; z-index: 1001;
+        }
+
+        .ctrl-btn {
+            width: 45px; height: 45px;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
+            color: var(--text-main);
+            cursor: pointer; transition: 0.3s;
+            text-decoration: none;
+        }
+        .ctrl-btn:hover { background: var(--vibrant-green); color: white; transform: scale(1.1); }
+
+        /* Typography */
+        .doc-header { text-align: center; margin-bottom: 3rem; }
+        h1 { font-size: 2.5rem; margin: 1rem 0; font-weight: 800; }
+        .section-divider { width: 120px; height: 5px; background: var(--vibrant-green); margin: 2rem auto; border-radius: 10px; }
+        .subtitle { color: var(--text-muted); font-size: 0.95rem; font-weight: 500; letter-spacing: 1px; }
+
+        /* Test Instructions Section */
+        .test-instructions {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .test-instructions h3 {
+            color: var(--vibrant-green);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .test-instructions ul {
+            list-style-position: inside;
+            color: var(--text-muted);
+            line-height: 2;
+        }
+
+        .test-instructions li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Test Stats */
+        .test-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--vibrant-green);
+            transform: translateY(-2px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--vibrant-green);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Timer Display */
+        .timer-display {
+            position: fixed;
+            top: 90px;
+            right: 30px;
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001;
+        }
+
+        .timer-display i {
+            color: var(--vibrant-green);
+            font-size: 1.2rem;
+        }
+
+        .timer-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Start Test Button */
+        .start-test-section {
+            text-align: center;
+            margin: 3rem 0;
+        }
+
+        .start-btn {
+            background: var(--vibrant-green);
+            color: white;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Test Set Selection */
+        .test-selection-section {
+            margin: 3rem 0;
+        }
+
+        .test-sets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .test-set-card {
+            background: var(--paper-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .test-set-card:hover {
+            border-color: var(--vibrant-green);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);
+        }
+
+        .test-set-icon {
+            font-size: 3rem;
+            color: var(--vibrant-green);
+            margin-bottom: 1rem;
+        }
+
+        .test-set-card h3 {
+            margin: 1rem 0;
+            color: var(--text-main);
+        }
+
+        .test-set-card p {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .start-btn-small {
+            background: var(--vibrant-green);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .start-btn-small:hover {
+            background: #0ea574;
+        }
+
+        /* Footer */
+        .doc-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+
+        .doc-footer a {
+            color: var(--vibrant-green);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        /* Hide questions section initially */
+        #questionsSection {
+            display: none;
+        }
+
+        /* Question Interface Styles */
+        .question-container {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-header h3 {
+            color: var(--vibrant-green);
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .question-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .progress-bar-container {
+            width: 200px;
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--vibrant-green);
+            transition: width 0.3s;
+        }
+
+        .question-text {
+            margin: 2rem 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .option {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--paper-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            border-color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .option.selected {
+            border-color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .option-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: var(--vibrant-green);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .option.selected .option-letter {
+            background: var(--vibrant-green);
+        }
+
+        .option-text {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .question-navigation {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            padding: 1rem 2rem;
+            border: 1px solid var(--border-color);
+            background: var(--paper-bg);
+            color: var(--text-main);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover:not(:disabled) {
+            border-color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .nav-button.primary {
+            background: var(--vibrant-green);
+            color: white;
+            border-color: var(--vibrant-green);
+        }
+
+        .nav-button.primary:hover {
+            background: #0ea574;
+            transform: translateY(-2px);
+        }
+
+        .nav-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Review Screen Styles */
+        .review-container {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+        }
+
+        .review-container h2 {
+            text-align: center;
+            color: var(--vibrant-green);
+            margin-bottom: 2rem;
+        }
+
+        .review-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 0.8rem;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .question-number {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-number.answered {
+            background: var(--vibrant-green);
+            color: white;
+        }
+
+        .question-number.unanswered {
+            background: var(--paper-bg);
+            border: 2px solid var(--border-color);
+            color: var(--text-muted);
+        }
+
+        .question-number:hover {
+            transform: scale(1.1);
+        }
+
+        .review-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Results Screen Styles */
+        .results-container {
+            background: var(--paper-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+        }
+
+        .results-container h2 {
+            text-align: center;
+            color: var(--vibrant-green);
+            margin-bottom: 2rem;
+        }
+
+        .result-status {
+            text-align: center;
+            padding: 3rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .result-status.passed {
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid var(--vibrant-green);
+        }
+
+        .result-status.failed {
+            background: rgba(239, 68, 68, 0.1);
+            border: 2px solid #ef4444;
+        }
+
+        .result-status i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-status.passed i {
+            color: var(--vibrant-green);
+        }
+
+        .result-status.failed i {
+            color: #ef4444;
+        }
+
+        .result-status h3 {
+            margin: 1rem 0;
+            font-size: 1.8rem;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-top: 1rem;
+        }
+
+        .result-status.passed .score-display {
+            color: var(--vibrant-green);
+        }
+
+        .result-status.failed .score-display {
+            color: #ef4444;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        /* Detailed Review Styles */
+        .detailed-review {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .detailed-review h2 {
+            text-align: center;
+            color: var(--vibrant-green);
+            margin-bottom: 2rem;
+        }
+
+        .review-question {
+            background: var(--paper-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .review-question.correct {
+            border-color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .review-question.incorrect {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .review-question.unanswered {
+            border-color: var(--text-muted);
+            background: rgba(148, 163, 184, 0.05);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .review-header h4 {
+            color: var(--text-main);
+            margin: 0;
+        }
+
+        .review-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .review-question.correct .review-badge {
+            background: var(--vibrant-green);
+            color: white;
+        }
+
+        .review-question.incorrect .review-badge {
+            background: #ef4444;
+            color: white;
+        }
+
+        .review-question.unanswered .review-badge {
+            background: var(--text-muted);
+            color: white;
+        }
+
+        .review-text {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .review-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .review-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .review-option.correct-answer {
+            border-color: var(--vibrant-green);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .review-option.user-answer:not(.correct-answer) {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .review-option i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+        }
+
+        .review-option.correct-answer i {
+            color: var(--vibrant-green);
+        }
+
+        .review-option.user-answer:not(.correct-answer) i {
+            color: #ef4444;
+        }
+
+        .explanation {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 4px solid var(--vibrant-green);
+            border-radius: 4px;
+            line-height: 1.8;
+        }
+
+        .explanation strong {
+            color: var(--vibrant-green);
+        }
+    </style>
+</head>
+<body>
+    <!-- LEFT SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-header">Test Navigation</div>
+        <ul class="nav-list">
+            <div class="progress-container">
+                <div id="progress-bar"></div>
+            </div>
+            <li class="nav-item active" data-section="header">
+                <a href="#header" class="nav-link">Test Overview</a>
+            </li>
+            <li class="nav-item" data-section="instructions">
+                <a href="#instructions" class="nav-link">Instructions</a>
+            </li>
+            <li class="nav-item" data-section="questions">
+                <a href="#questions" class="nav-link">Questions</a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- TOP CONTROLS -->
+    <div class="nav-controls">
+        <a href="index.html" class="ctrl-btn" title="Home">
+            <i class="fas fa-home"></i>
+        </a>
+        <div class="ctrl-btn" onclick="toggleTheme()" title="Toggle Theme">
+            <i class="fas fa-adjust"></i>
+        </div>
+        <div class="ctrl-btn" onclick="openAbout()" title="About">
+            <i class="fas fa-info"></i>
+        </div>
+        <div class="ctrl-btn" onclick="openCalendar()" title="Calendar">
+            <i class="fas fa-calendar"></i>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-wrapper">
+        <div class="document-container">
+            <!-- HEADER -->
+            <header class="doc-header" id="header">
+                <div class="subtitle">CFA LEVEL I EXAMINATION</div>
+                <h1>Ethics and Professional Standards</h1>
+                <div class="subtitle">Practice Test Series</div>
+                <div class="section-divider"></div>
+            </header>
+
+            <!-- TEST STATISTICS -->
+            <div class="test-stats">
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Test Sets</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Questions Per Test</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30</div>
+                    <div class="stat-label">Minutes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">70%</div>
+                    <div class="stat-label">Passing Score</div>
+                </div>
+            </div>
+
+            <!-- INSTRUCTIONS SECTION -->
+            <section id="instructions">
+                <div class="test-instructions">
+                    <h3><i class="fas fa-clipboard-list"></i> Test Instructions</h3>
+                    <ul>
+                        <li><strong>Format:</strong> Multiple choice questions with three options each</li>
+                        <li><strong>Time Limit:</strong> 30 minutes per test</li>
+                        <li><strong>Coverage:</strong> Ethics, Code of Ethics, Professional Standards, and GIPS</li>
+                        <li><strong>Scoring:</strong> Each question is worth 1 point. No negative marking.</li>
+                        <li><strong>Navigation:</strong> You can move between questions and review your answers</li>
+                        <li><strong>Review:</strong> After submission, you'll see detailed explanations for each question</li>
+                        <li><strong>Randomized:</strong> Questions are shuffled for each test attempt</li>
+                    </ul>
+                </div>
+
+                <div class="test-instructions" style="background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2);">
+                    <h3 style="color: #ef4444;"><i class="fas fa-exclamation-triangle"></i> Important Notes</h3>
+                    <ul>
+                        <li>Once you start the test, the timer will begin automatically</li>
+                        <li>Choose one of the 5 available test sets to begin</li>
+                        <li>Questions are randomly shuffled each time you take a test</li>
+                        <li>Make sure you have a stable connection for best performance</li>
+                        <li>Complete all questions before the timer runs out</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- TEST SET SELECTION -->
+            <div class="test-selection-section">
+                <h2 style="text-align: center; margin-bottom: 2rem; color: var(--vibrant-green);">Choose Your Test Set</h2>
+                <div class="test-sets-grid">
+                    <div class="test-set-card" onclick="startTest(1)">
+                        <div class="test-set-icon"><i class="fas fa-list-ol"></i></div>
+                        <h3>Test Set 1</h3>
+                        <p>20 Questions • 30 Minutes</p>
+                        <button class="start-btn-small">Start Test</button>
+                    </div>
+                    <div class="test-set-card" onclick="startTest(2)">
+                        <div class="test-set-icon"><i class="fas fa-list-ol"></i></div>
+                        <h3>Test Set 2</h3>
+                        <p>20 Questions • 30 Minutes</p>
+                        <button class="start-btn-small">Start Test</button>
+                    </div>
+                    <div class="test-set-card" onclick="startTest(3)">
+                        <div class="test-set-icon"><i class="fas fa-list-ol"></i></div>
+                        <h3>Test Set 3</h3>
+                        <p>20 Questions • 30 Minutes</p>
+                        <button class="start-btn-small">Start Test</button>
+                    </div>
+                    <div class="test-set-card" onclick="startTest(4)">
+                        <div class="test-set-icon"><i class="fas fa-list-ol"></i></div>
+                        <h3>Test Set 4</h3>
+                        <p>20 Questions • 30 Minutes</p>
+                        <button class="start-btn-small">Start Test</button>
+                    </div>
+                    <div class="test-set-card" onclick="startTest(5)">
+                        <div class="test-set-icon"><i class="fas fa-list-ol"></i></div>
+                        <h3>Test Set 5</h3>
+                        <p>20 Questions • 30 Minutes</p>
+                        <button class="start-btn-small">Start Test</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTIONS SECTION (Hidden initially, will be shown when test starts) -->
+            <section id="questionsSection">
+                <!-- Questions will be inserted here dynamically -->
+                
+                <!-- This is where your question interface will go -->
+                <!-- The structure continues from here with actual questions -->
+                
+            </section>
+
+            <footer class="doc-footer">
+                PROJECT BY <a href="https://www.linkedin.com/in/sahil-gaikwad-1953b0259/" target="_blank">SAHIL GAIKWAD</a>
+            </footer>
+        </div>
+    </div>
+
+    <!-- ABOUT MODAL -->
+    <div class="modal-overlay" id="aboutModal" onclick="closeModals()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 style="color:var(--vibrant-green); margin-bottom: 1rem;">Candidate Excellence</h2>
+            <p style="margin-bottom: 2rem; line-height: 1.8;">"This platform is made to help my fellow candidates to study and learn more efficiently and in highest ever quality."</p>
+            <p style="font-weight: 800; letter-spacing: 2px;">BY SAHIL GAIKWAD</p>
+            <div onclick="closeModals()" style="margin-top: 2rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ DISMISS ]</div>
+        </div>
+    </div>
+
+    <!-- CALENDAR MODAL -->
+    <div class="modal-overlay" id="calModal" onclick="closeModals()">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h2 id="calTitle" style="color:var(--vibrant-green); margin-bottom: 1rem;">Date</h2>
+            <p id="calDate" style="font-weight: 800; margin-bottom: 1.5rem;"></p>
+            <textarea style="width:100%; height:80px; padding:10px; border: 1px solid var(--border-color); color:inherit; background:transparent; border-radius: 6px;" placeholder="Enter notes..."></textarea>
+            <div onclick="closeModals()" style="margin-top: 1rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ SAVE ]</div>
+        </div>
+    </div>
+
+    <script>
+        // Complete question bank - ALL 108 QUESTIONS
+        const allQuestions = [
+            // Module 89.1 - Ethics and Trust (20 questions)
+            { id: 1, text: "Which of the following statements about a code of ethics is most accurate? A code of ethics:", options: ["does not need to include standards of conduct.", "must include principles-based standards of conduct.", "must include rules-based standards of conduct."], correct: 0, explanation: "A code of ethics may include standards of conduct, but does not require them." },
+            { id: 2, text: "Which of the following statements about legal and ethical standards is most accurate?", options: ["Ethical and legal standards often intersect, but not always.", "Ethical standards are a subset of legal standards.", "Legal standards are a subset of ethical standards."], correct: 0, explanation: "Ethical and legal standards are not subsets of each other. Some actions that are legal might not be ethical, and some actions that are ethical might not be legal." },
+            { id: 3, text: "A requirement that investment professionals act in the best interests of their clients is a:", options: ["fair dealing standard.", "suitability standard.", "fiduciary standard."], correct: 2, explanation: "A fiduciary standard requires professionals to use their knowledge and expertise to act in the best interests of their clients." },
+            { id: 4, text: "A framework for ethical decision making is most appropriately applied to:", options: ["aid decision makers in considering alternatives and their potential impacts.", "determine whether actions are legal.", "reduce the need to maintain a large compliance department."], correct: 0, explanation: "A framework for ethical decision making is a way to help decision makers consider alternatives and their impact on stakeholders." },
+            { id: 5, text: "A requirement that investment professionals recommend securities that match their clients' requirements and constraints is a:", options: ["portfolio standard.", "fiduciary standard.", "suitability standard."], correct: 2, explanation: "A suitability standard refers to matching client return requirements and risk tolerances with the characteristics of the securities recommended." },
+            { id: 6, text: "Unethical behavior by individuals in the investment industry is most likely to:", options: ["decrease the rate of economic growth.", "increase the overall profits of financial services firms.", "decrease financing costs for businesses."], correct: 0, explanation: "Unethical behavior in the investment industry can divert capital away from its highest valued uses, which decreases the growth rate of the economy." },
+            { id: 7, text: "Standards of conduct are most accurately described as:", options: ["a necessary part of any ethical code.", "giving members of a group a minimum level of acceptable behavior.", "providing the public with the values and general expectations for a group of professionals."], correct: 1, explanation: "Standards of conduct address specific minimum levels or expected behavior in various circumstances." },
+            { id: 8, text: "Unethical behavior by a financial professional harms:", options: ["only clients.", "only clients and other employees.", "clients, other employees, and society."], correct: 2, explanation: "By reducing trust in the financial services profession, unethical behavior can harm clients, other financial services employees, and society." },
+            { id: 9, text: "Unethical behavior by financial professionals:", options: ["does not affect allocation of capital.", "increases risk and the cost of capital.", "increases incomes for the profession."], correct: 1, explanation: "Unethical behavior will increase risk and the cost of capital, ultimately decreasing incomes for the profession." },
+            { id: 10, text: "Ethics are most accurately defined as:", options: ["a belief about proper conduct.", "a written code of standards.", "the study of moral principles."], correct: 2, explanation: "Ethics refers to the study of moral principles. Ethics is broader than written codes of standards or a particular belief about proper conduct." },
+            { id: 11, text: "Ethics least likely refers to:", options: ["moral principles to guide behavior.", "a person's beliefs about right and wrong behavior.", "the study of good and bad behavior."], correct: 1, explanation: "An individual's beliefs are not ethics as it is used in the Level I CFA curriculum. Ethics are described as commonly accepted principles of good and bad behavior." },
+            { id: 12, text: "CFA Institute Standards of Professional Conduct are most accurately described as being based on:", options: ["a code of ethics.", "accepted legal standards.", "the best interests of members and candidates."], correct: 0, explanation: "The Standards of Professional Conduct are based on principles stated in the CFA Institute Code of Ethics." },
+            { id: 13, text: "Which of the following statements about legal and ethical standards is most accurate?", options: ["Illegal acts are always unethical.", "Some illegal acts are considered ethical.", "Unethical acts are always illegal."], correct: 1, explanation: "Some illegal acts, such as acts of civil disobedience, are considered ethical by many people. All unethical behavior is not necessarily illegal." },
+            { id: 14, text: "Which of the following best describes elements of a framework for ethical decision making?", options: ["Identify relevant facts; consider influences and alternatives; decide and act; reflect on outcomes.", "Relevance; faithful representation; transparency; comprehensiveness; consistency.", "State the objective; gather, process, and interpret the data; report the conclusions; update the analysis."], correct: 0, explanation: "The framework includes: Identify relevant facts, stakeholders, ethical principles, and conflicts; Consider alternatives and influences; Decide and act; Reflect on outcomes." },
+            { id: 15, text: "A code of ethics:", options: ["provides the public with assurance of a minimum level of ethical behavior.", "should not be used for marketing purposes.", "may be rules-based or principles-based."], correct: 2, explanation: "A code of ethics may be rules-based or principles-based. There can be no assurance that none of a group will violate a code of ethics." },
+            { id: 16, text: "Establishing standards of ethical behavior and monitoring professional conduct are best described as ways that professions:", options: ["avoid regulatory scrutiny.", "establish trust.", "increase the market value of their services."], correct: 1, explanation: "Ways that professions establish trust include requiring high standards, establishing standards of ethical behavior, and monitoring professional conduct." },
+            { id: 17, text: "A profession is most accurately described as an occupational group that requires its members to:", options: ["abide by a code of ethical conduct.", "have specialized expert knowledge.", "put client interests first."], correct: 1, explanation: "A profession is an occupational group that has requirements of specialized expert knowledge." },
+            { id: 18, text: "Challenges to ethical behavior are most likely to arise from:", options: ["inadequate training.", "internal motivations.", "situational influences."], correct: 2, explanation: "Situational influences, which are factors external to a decision maker, are the most likely source of challenges to ethical behavior." },
+            { id: 19, text: "An ethical decision-making framework:", options: ["considers alternative actions and unintended consequences.", "focuses on the near term impact on all stakeholders.", "primarily addresses compliance with regulatory issues."], correct: 0, explanation: "An ethical decision-making framework is designed to ensure that alternative actions and potential unintended consequences are considered." },
+            { id: 20, text: "Which of the following characteristics distinguishes a profession from an occupation? Members of a profession:", options: ["view their work as a calling.", "are better compensated for their services.", "abide by a code of ethics."], correct: 2, explanation: "One of the defining characteristics of a profession is that its members agree to abide by a common code of ethics." },
+
+            // Module 90.1 - Code and Standards (29 questions)
+            { id: 21, text: "In dealing with the public and others, the CFA Institute Code of Ethics requires that CFA Institute members act with:", options: ["integrity, competence, and respect.", "candor, skill, and honor.", "honesty, professionalism, and high ethical standards."], correct: 0, explanation: "Integrity, competence, and respect are mentioned by name in the first component of the Code of Ethics." },
+            { id: 22, text: "The first component of the Code of Ethics least likely states that a CFA Institute member should act with:", options: ["integrity and diligence.", "competence and respect.", "solemnity and in an ethical manner."], correct: 2, explanation: "Component one states that members and candidates should 'act with integrity, competence, diligence, respect, and in an ethical manner.'" },
+            { id: 23, text: "According to the Code of Ethics, which of the following statements is NOT correct? CFA Institute members are required to:", options: ["comply with the CFA Institute Global Investment Performance Standards.", "maintain and improve their competence and strive to maintain the competence of others in the profession.", "use reasonable care and exercise independent professional judgment."], correct: 0, explanation: "The CFA Institute-GIPS are voluntary standards. Firms are not required to comply when presenting performance." },
+            { id: 24, text: "Which of the following is a component of the Code of Ethics? CFA Institute members shall:", options: ["make reasonable efforts to detect and prevent violations by those who are under their supervision.", "disclose to their employer all matters that reasonably could be expected to interfere with their duty.", "strive to maintain and improve their competence and the competence of others in the profession."], correct: 2, explanation: "Striving to maintain and improve competence is one of the components of the Code of Ethics." },
+            { id: 25, text: "With respect to CFA Institute enforcement of the Code and Standards, possible disciplinary sanctions least likely include:", options: ["payment of a fine.", "public censure.", "suspension from participation in the CFA Program."], correct: 0, explanation: "CFA Institute does not impose fines. Sanctions may include public censure, suspension, or revocation of the right to use the CFA designation." },
+            { id: 26, text: "According to the CFA Institute Code of Ethics, CFA Institute members shall:", options: ["preserve the confidentiality of information communicated by clients, prospects, or employers.", "act with integrity, competence, diligence, respect, and in an ethical manner.", "maintain knowledge and comply with all applicable laws, rules and regulations."], correct: 1, explanation: "Acting with integrity, competence, diligence, respect, and in an ethical manner is one of the six components of the Code of Ethics." },
+            { id: 27, text: "Which of the following is a component of the Code of Ethics? CFA Institute members shall:", options: ["use reasonable care and exercise independent professional judgment.", "use particular care in determining applicable fiduciary duty.", "not knowingly participate or assist in any violation of laws, rules, or regulations."], correct: 0, explanation: "Using reasonable care and exercising independent professional judgment is one of the components of the Code of Ethics." },
+            { id: 28, text: "Which of the following is least likely an act explicitly referred to in the Code of Ethics?", options: ["Educating the general public on investing.", "Using reasonable care when making investment recommendations.", "Improve professional competence."], correct: 0, explanation: "Although the Code says a member has obligations to the public, educating the general public is not implied." },
+            { id: 29, text: "Which of the following activities would be following a component of the Code of Ethics explicitly?", options: ["Attending continuing education seminars on investing and inviting colleagues to come along.", "Consulting with colleagues about opinions you reach in your research.", "Maintaining a list of colleagues who have violated the CFA Institute standards."], correct: 0, explanation: "The Code states that a member shall 'Maintain and improve their professional competence and strive to maintain and improve the competence of other investment professionals.'" },
+            { id: 30, text: "The Code of Ethics least likely states that a CFA Institute member shall do which of the following?", options: ["Act with integrity.", "Advocate laws to protect the investing public.", "Reflect credit on the profession."], correct: 1, explanation: "The Code of Ethics says nothing about a CFA Institute member advocating laws." },
+            { id: 31, text: "The CFA Institute's Professional Conduct Program may learn about potential violations of the Code and Standards by members and candidates:", options: ["from sources other than written complaints or members and candidates self-reporting.", "only from written complaints or members and candidates self-reporting.", "only from members and candidates self-reporting."], correct: 0, explanation: "The Professional Conduct Program may learn about violations through public sources, exam proctors, review of materials, or monitoring of social media." },
+            { id: 32, text: "According to the Code of Ethics, a member reflects credit on the profession when a member:", options: ["consults with other members on a regular basis.", "places the clients first.", "practices in a professional and ethical manner."], correct: 2, explanation: "Component four says a member shall 'Practice and encourage others to practice in a professional and ethical manner that will reflect credit on members and the profession.'" },
+            { id: 33, text: "The CFA Institute Professional Conduct Program may impose sanctions on:", options: ["CFA charterholders and candidates for the CFA designation.", "CFA charterholders only.", "CFA charterholders, member firms, and candidates for the CFA designation."], correct: 0, explanation: "The Professional Conduct Program may impose sanctions on CFA charterholders and candidates. Firms are not members of CFA Institute." },
+            { id: 34, text: "The CFA Institute Code of Ethics specifies that CFA Institute Members and Candidates must do all of the following EXCEPT:", options: ["refrain from any conduct that compromises the reputation or integrity of the CFA designation.", "use reasonable care and exercise independent professional judgment when engaging in professional activities.", "act with integrity, competence, diligence, respect, and in an ethical manner."], correct: 0, explanation: "Not compromising the reputation is part of the Standards of Professional Conduct, not specifically the Code of Ethics." },
+            { id: 35, text: "The first component of the Code of Ethics does NOT explicitly say that a CFA Institute member will act in a certain manner with respect to which of the following groups?", options: ["Prospective clients.", "CFA Institute members and candidates in the CFA Program.", "Colleagues."], correct: 1, explanation: "Participants in the CFA Program are not specifically mentioned in the Code of Ethics." },
+            { id: 36, text: "Which of the following is least likely part of the CFA Institute Code of Ethics. Members of CFA Institute will:", options: ["strive to maintain and improve their competence and the competence of others in the profession.", "use reasonable care and exercise independent professional judgment.", "recommend investments that maximize returns for a given level of risk."], correct: 2, explanation: "Standard III(C) Suitability, not the Code of Ethics, requires that investments be appropriate and suitable." },
+            { id: 37, text: "All of the following are components of the Code of Ethics EXCEPT:", options: ["demonstrating diligence, independence, and thoroughness when preparing investment reports.", "striving to maintain and improve their competence and the competence of others in the profession.", "using reasonable care and exercising independent professional judgment."], correct: 0, explanation: "Demonstrating diligence, independence, and thoroughness is found in the Standards of Professional Conduct." },
+            { id: 38, text: "According to the Code of Ethics, the professional judgment of a member should be:", options: ["independent.", "consistent with regulatory guidelines.", "confirmed by a degree from an accredited educational institution."], correct: 0, explanation: "The Code of Ethics states that the CFA Institute member shall 'Use reasonable care and exercise independent professional judgment.'" },
+            { id: 39, text: "Which of the following is least likely to be a reason for imposing a suspension on a member or candidate?", options: ["Discussing a question from the CFA exams on social media.", "Failing to return the annual professional conduct statement.", "Misdemeanor charge for possession of narcotics."], correct: 2, explanation: "A misdemeanor charge not related to professional conduct is not grounds for suspension." },
+            { id: 40, text: "Which of the following is a component of the Code of Ethics?", options: ["Members shall use reasonable care and exercise independent professional judgment.", "Members shall not knowingly participate or assist in any violation of laws, rules, or regulations.", "Members shall not engage in professional conduct involving dishonesty, fraud, or deceit."], correct: 0, explanation: "This is a component of the Code of Ethics. Others pertain to the Standards of Professional Conduct." },
+            { id: 41, text: "Which of the following is least likely part of the CFA Institute Code of Ethics?", options: ["Contractual provisions.", "Independent judgment.", "Competence."], correct: 0, explanation: "Contractual provisions are not part of the Code of Ethics." },
+            { id: 42, text: "A member or candidate who rejects a disciplinary sanction proposed by the Professional Conduct Program:", options: ["may request an appeal to a hearing panel.", "will be suspended from membership or participation in the CFA Program.", "will typically not be subject to further disciplinary procedure."], correct: 0, explanation: "A member or candidate may accept a proposed disciplinary sanction or request an appeal to a hearing panel." },
+            { id: 43, text: "Which of the following is a component of the Code of Ethics?", options: ["Members must not engage in conduct that compromises the integrity of the CFA designation.", "Practice and encourage others to practice in a professional and ethical manner that will reflect credit on members.", "Transactions for clients have priority over transactions in which a member is the beneficial owner."], correct: 1, explanation: "This is a component of the Code of Ethics. Others pertain to the Standards of Practice." },
+            { id: 44, text: "With respect to the professional conduct of a member or candidate, CFA Institute staff will consider a complaint from:", options: ["anyone.", "only other members and candidates or professionals in the investment industry.", "only other members and candidates."], correct: 0, explanation: "Complaints to the Professional Conduct Program may be filed by anyone." },
+            { id: 45, text: "Sanctions that CFA Institute may impose on a member or candidate under the Professional Conduct Program include:", options: ["suspension from employment in the financial services industry.", "returning of all profits gained through violations of the Code and Standards.", "public censure."], correct: 2, explanation: "Sanctions include public censure, suspension from membership, revocation of the CFA charter, or suspension from the CFA program." },
+            { id: 46, text: "Steve Jones is a member of CFA Institute but has not earned the CFA designation yet. CFA Institute is investigating Jones' activities. If Jones declines to cooperate, he:", options: ["may be suspended from membership.", "may not be suspended because cooperating could be self incriminating.", "may not be suspended because he does not have the CFA designation yet."], correct: 0, explanation: "Refusing to cooperate with a CFA Institute investigation could lead to suspension of membership or participation in the CFA Program." },
+            { id: 47, text: "Recommended procedures to comply with the Standard related to fair dealing are most likely to include:", options: ["requiring investment committee approval for all recommendation changes.", "simultaneously informing all investment representatives in the firm about pending recommendation changes.", "publishing personnel guidelines for pre-dissemination that prohibit those who know about a pending recommendation from discussing or acting on it."], correct: 2, explanation: "Recommended procedures include limiting the number of people who know that a change in recommendation will be made." },
+            { id: 48, text: "An analyst preparing a report needs to cite which of the following?", options: ["A recent quote from the Federal Reserve Chairman.", "Estimates of betas provided by Standard & Poor's.", "The individual who developed a chart from the same firm."], correct: 0, explanation: "Statistics provided by a recognized agency do not need to be cited. Charts and quotes from outside sources need to be cited." },
+            { id: 49, text: "Which of the following is most likely permitted under Standard I(C), Misrepresentation?", options: ["Citing quotes attributed to 'investment experts' without specific reference.", "Including data showing the current government bond yield curve in a report to a client without stating its source.", "Using excerpts from reports prepared by others without acknowledgement."], correct: 1, explanation: "The government bond yield curve is factual information available from many recognized financial reporting services." },
+
+            // Module 91 - Standards I-VII (50 questions) - CONTINUING FROM QUESTION 50
+            { id: 50, text: "If a member does business in a country with stricter securities laws than the Code and Standards, but the member's home country has less strict laws, the member must abide by the:", options: ["Code and Standards only.", "home country's securities laws and regulations only.", "laws and regulations of the country in which the member is doing business."], correct: 2, explanation: "A member must adhere to the strictest applicable law or regulation." },
+            { id: 51, text: "In the course of reviewing a company, an analyst has received comments from management that, while not meaningful by themselves, when pieced together with outside data, lead to a recommendation. What should the analyst do?", options: ["Show the report to counsel since this information has become material.", "The comments are non material and the report can be issued with proper documentation.", "Not issue the report until the comments are publicly announced."], correct: 1, explanation: "This is an example of the mosaic theory where nonmaterial information is pieced together." },
+            { id: 52, text: "A member or candidate who suspects that a colleague is violating the law should most appropriately:", options: ["consult with the company counsel to determine if in fact a law is being violated.", "report all illegal activities to the appropriate regulatory agency.", "report the illegal activity to CFA Institute Professional Standards Review Board."], correct: 0, explanation: "When members suspect illegal activities, they should consult counsel to determine if the conduct is illegal." },
+            { id: 53, text: "John Farr, CFA, has accumulated several pieces of nonmaterial nonpublic information about a company. From analysis based on this information, he concludes the company will have unexpectedly low earnings. According to the Standards, Farr:", options: ["may not trade or make recommendations based on his analysis.", "may trade or make recommendations based on his analysis.", "may trade only if his compliance officer determines the information was not material."], correct: 1, explanation: "Farr is free to act under the mosaic theory because nonmaterial nonpublic information does not fall within the prohibition." },
+            { id: 54, text: "All of the following violate Standard I(D) Misconduct EXCEPT:", options: ["conviction of a misdemeanor involving civil disobedience in support of personal beliefs.", "any conduct that undermines confidence that the CFA charter represents achievement based on merit.", "conviction of a crime involving fraud."], correct: 0, explanation: "The Standards do not focus on personal conduct as long as it doesn't reflect poorly on professional reputation." },
+            { id: 55, text: "Which of the following would be permissible under Standard I(C), Misrepresentation?", options: ["Including a graph of central bank discount rates without citing the source.", "Reporting statistics prepared by an outside firm, identifying the source but omitting caveats.", "Using excerpts from a report prepared by an outside research firm without acknowledgement."], correct: 0, explanation: "Factual information published by recognizable financial and statistical reporting services may be used without acknowledgment." },
+            { id: 56, text: "A CFA charterholder takes a trip for which his firm will pay expenses. Upon return, he alters receipts to inflate expenses. Is this a violation?", options: ["This is a violation only if the amount is material.", "Yes, because the charterholder should have paid his own expenses.", "Yes, because it reflects dishonesty."], correct: 2, explanation: "Any action involving dishonesty, fraud, or deceit is a violation of Standard I(D) Misconduct." },
+            { id: 57, text: "A CFA charterholder is caught shoplifting and sentenced to nine months in prison. Is this a violation of Standard I(D) Misconduct?", options: ["No, because the crime does not relate to the investment profession.", "Yes, because the crime involved stealing.", "Yes, because the prison sentence is more than six months."], correct: 1, explanation: "Any act involving stealing or dishonest conduct that reflects adversely on the charterholder's professional activities is a violation." },
+            { id: 58, text: "Which of the following is a violation of Standard II(B), Market Manipulation?", options: ["Engaging in a block trade to limit the effect on the price of a thinly traded security.", "Implementing a trading strategy to exploit differences in market power and information.", "Overstating an earnings projection in order to increase the price of a stock."], correct: 2, explanation: "Spreading false information to manipulate prices violates Standard II(B) Market Manipulation." },
+            { id: 59, text: "During a conference call with 30 analysts, a company discloses quarterly earnings equal to consensus forecast. Analysts should consider this information:", options: ["nonpublic, but not material.", "material and nonpublic.", "material, but public."], correct: 2, explanation: "Information disclosed in a conference call with multiple analysts is considered public." },
+            { id: 60, text: "The term 'material' in material nonpublic information refers to information that:", options: ["is acquired from a special or confidential relationship with the company.", "is likely to be considered important by reasonable investors in determining whether to trade.", "is derived from direct communication with company management."], correct: 1, explanation: "Material information is that which would be considered important by reasonable investors." },
+            { id: 61, text: "All of the following are violations of Standard II(B) Market Manipulation EXCEPT:", options: ["disseminating misleading information about new products.", "exploiting differences in market inefficiencies.", "securing a controlling interest to influence the price of a related derivative."], correct: 1, explanation: "Exploiting market inefficiencies is not market manipulation; it's a legitimate trading strategy." },
+            { id: 62, text: "Which of the following most accurately states a limitation that the Fair Dealing standard imposes?", options: ["Clients should not be discriminated against when disseminating investment recommendations.", "Referral fees may be disclosed after proceeding with an agreement for service.", "Before trading on her own portfolio, a member must wait for employer and client deals to be executed."], correct: 0, explanation: "Standard III(B) Fair Dealing states that dissemination of information and recommendations must be handled fairly." },
+            { id: 63, text: "According to the Standard concerning loyalty, prudence, and care, brokerage is an asset of the:", options: ["brokerage firm conducting the trades.", "managing firm.", "client."], correct: 2, explanation: "Brokerage is an asset of the client." },
+            { id: 64, text: "A member would most likely violate the Standard regarding duties to clients by:", options: ["adding a risky derivative security to a moderate risk tolerance portfolio.", "executing a client order for a security the member believes is greatly overvalued.", "recommending securities without a reasonable inquiry into the client's investment experience."], correct: 2, explanation: "Standard III(A) requires members to make a reasonable inquiry into client's experience and objectives before making recommendations." },
+            { id: 65, text: "Concerning Standard III(B), Fair Dealing, which action is NOT valid for compliance?", options: ["Communicate investment recommendations simultaneously within the firm and to customers.", "Communicate recommendations to all customers including those for whom securities are not eligible.", "Limit the number of people involved who are privy to pending recommendations."], correct: 1, explanation: "There is no need to communicate recommendations to clients for whom the securities are unsuitable." },
+            { id: 66, text: "To comply with Standard III(C) Suitability, members should do all of the following EXCEPT:", options: ["Assess the time horizon of the client.", "Implement a similar policy for all clients.", "Assess the return objectives of the client."], correct: 1, explanation: "Each client should have an individual assessment. Implementing the same policy for all clients may violate Suitability." },
+            { id: 67, text: "Compliance with the Standard concerning suitability least likely includes determining a client's:", options: ["social habits and interests.", "liquidity needs.", "return objectives."], correct: 0, explanation: "The procedures for compliance include determining investment objectives and constraints, but not social habits." },
+            { id: 68, text: "A money manager is meeting with a prospect and states 'These are the winners I picked for my clients. Their returns indicate the type I can earn for you.' This is a violation unless:", options: ["the manager had the historical information in writing.", "the manager cannot reveal historical returns of recent picks.", "the positions listed constitute a complete presentation with no stocks omitted."], correct: 2, explanation: "Standard III(D) requires fair representations. Unless all positions are included, the manager is misrepresenting past performance." },
+            { id: 69, text: "The Standard concerning preservation of confidentiality states that members must keep information confidential about:", options: ["current and former clients, but not prospective clients.", "prospective and current clients, but not former clients.", "current clients, former clients, and prospective clients."], correct: 2, explanation: "Standard III(E) applies to information about current, former, and prospective clients." },
+            { id: 70, text: "A candidate or member is least likely violating the Standard regarding confidentiality if he shares confidential client information with:", options: ["the CFA Institute Professional Conduct Program.", "the client's attorney.", "the co-owner of the client's account."], correct: 0, explanation: "Sharing information with the PCP when requested is not a violation unless prohibited by law." },
+            { id: 71, text: "All of the following activities might constitute a violation of Standard IV(A), Loyalty to Employer, EXCEPT:", options: ["misuse of confidential information.", "solicitation of the employer's clients following termination of employment.", "solicitation of the employer's clients prior to termination of employment."], correct: 1, explanation: "Soliciting clients after termination is generally not a violation if done properly." },
+            { id: 72, text: "Which of the following statements regarding employee/employer relationships is NOT correct?", options: ["A written contract may or may not exist between employer and employee.", "An employee is someone in the service of another.", "There must be monetary compensation for an employer/employee relationship to exist."], correct: 2, explanation: "Monetary compensation is not required for an employer/employee relationship to exist." },
+            { id: 73, text: "To comply with Standard IV(B), Additional Compensation Arrangements, members should do all EXCEPT:", options: ["immediately make a written report to their employer specifying compensation benefits received.", "reject any outside compensation immediately.", "state the terms of agreements regarding compensation and duration."], correct: 1, explanation: "Members are not required to reject outside compensation; they must disclose it and obtain employer permission." },
+            { id: 74, text: "Which of the following statements is most accurate about the Standard concerning responsibilities of supervisors?", options: ["If a supervisor makes a reasonable effort but fails to detect a violation, she violated the Standard.", "If a subordinate violates a law, her supervisor is in violation of the Standard.", "If a supervisor does not make reasonable efforts to detect violations, she is in violation even if no violations occurred."], correct: 2, explanation: "Supervisors must make reasonable efforts to detect violations. Failure to do so is itself a violation." },
+            { id: 75, text: "A firm recently hired a supervisor who reviewed compliance procedures and believes they need revision. The supervisor must:", options: ["decline supervisory responsibilities in writing until adequate compliance is adopted.", "exercise supervisory responsibilities with greater diligence required by the Code and Standards.", "make reasonable efforts to encourage the company to adopt an adequate compliance system."], correct: 2, explanation: "The supervisor should make reasonable efforts to encourage adoption of adequate compliance procedures." },
+            { id: 76, text: "Which of the following examples of supervisory responsibility is consistent with the Standards?", options: ["Policies allow a portfolio manager to designate a trade to an account after the outcome is known.", "A professional conduct evaluation is part of an employee's performance review.", "A supervisor's income is partially based on the firm's overall trading activity."], correct: 1, explanation: "Including professional conduct evaluation in performance reviews is a recommended compliance procedure." },
+            { id: 77, text: "Which of the following statements is most accurate about the Standard concerning referral fees?", options: ["Referral fees may be disclosed before or after proceeding with an agreement for service.", "Referral fees must be disclosed after proceeding with an agreement.", "Referral fees must be disclosed before proceeding with an agreement for service."], correct: 2, explanation: "Standard VI(C) requires disclosure before proceeding with an agreement, allowing clients to evaluate full cost." },
+            { id: 78, text: "An analyst routinely offers clients opportunity to purchase hot new issues and says he will distribute equally with himself included. With respect to Standard VI(B), this:", options: ["cannot be a violation because clients know and agree.", "may be a violation because it's impossible to distribute hot issues equally.", "may be a violation despite client approval."], correct: 2, explanation: "Just because clients know of a practice doesn't make it right. The analyst must put clients first." },
+            { id: 79, text: "Standard VI(B), Priority of Transactions, applies to transactions an analyst takes on behalf of:", options: ["both his employer and his clients.", "his employer.", "his clients."], correct: 0, explanation: "Standard VI(B) addresses treatment of both client and employer accounts." },
+            { id: 80, text: "An analyst likes to trade commodity futures in her account. She doesn't deem any client accounts suitable for futures. When she identifies a favorable position, she should:", options: ["act on it as she sees fit.", "first tell her clients about it before acting.", "refrain from acting until she notifies her supervisor."], correct: 0, explanation: "The investment is not suitable for clients, so she's not obligated to advise them of her own investments." },
+            { id: 81, text: "Referral fees a member must disclose to a prospective client include:", options: ["only fees a member receives for referrals.", "only fees a member pays to others for referrals.", "both fees a member receives and fees a member pays."], correct: 2, explanation: "Members must disclose all referral arrangements to employer, clients, and prospective clients." },
+            { id: 82, text: "The Standard concerning referral fees is applicable to:", options: ["only considerations received for recommending products or services.", "any consideration received or paid for recommending products or services.", "only considerations paid for recommending products or services."], correct: 1, explanation: "Standard VI(C) requires members to disclose any consideration received or paid for a recommendation." },
+            { id: 83, text: "An analyst has not paid CFA Institute dues for several years but files professional conduct statements annually. The analyst:", options: ["may not use the CFA designation.", "is still considered an active member of CFA Institute.", "may not refer to having been a CFA charterholder."], correct: 0, explanation: "To maintain the right to use the CFA designation, members must pay annual dues and submit Professional Conduct Statements." },
+            { id: 84, text: "All of the following are required to maintain active CFA Institute member status EXCEPT:", options: ["Passing each exam in no more than two tries.", "paying membership dues to CFA Institute on an annual basis.", "remit a completed Professional Conduct Statement on an annual basis."], correct: 0, explanation: "Passing each exam in two or fewer tries is not required to maintain active status." },
+            { id: 85, text: "A retired CFA charterholder who relinquished membership puts on her resume: 'I earned the CFA designation 10 years ago.' Is this a violation?", options: ["Yes, because she is no longer an active member.", "No, as long as she does not indicate she currently has the designation.", "Yes, she must state that she no longer holds the designation."], correct: 1, explanation: "She's allowed to state that she earned the designation as long as she doesn't infer she currently has it." },
+            { id: 86, text: "Which of the following is least likely an appropriate use of the CFA designation?", options: ["Jeremy Salyers, as a CFA charterholder, will outperform the market.", "Jeremy Salyers, CFA.", "Jeremy Salyers has earned the CFA designation by passing three exams, all on his first attempts."], correct: 0, explanation: "Members may not over-promise their performance as CFA charterholders." },
+            { id: 87, text: "Which of the following is least likely a violation of the Standard concerning conduct as participants in CFA Institute programs?", options: ["Disregarding rules related to administration of the CFA examination.", "Expressing opinions in disagreement with CFA Institute advocacy positions.", "Improperly using the CFA Designation to further professional goals."], correct: 1, explanation: "Members are allowed to express opinions about CFA Institute and the CFA Program." },
+            { id: 88, text: "A Level II CFA candidate may state:", options: ["I am a Level II CFA.", "I passed the Level I CFA exam.", "I am a Level I CFA charterholder."], correct: 1, explanation: "The only appropriate statement is 'I passed the Level I CFA exam.' It's factual and doesn't imply a partial designation." },
+            { id: 89, text: "Which of the following statements is a violation if included on a CFA charterholder's resume?", options: ["Earning the CFA designation indicates my desire to maintain high ethical standards.", "To earn the CFA designation I had to pass three rigorous examinations.", "Earning the CFA designation indicates my superior ability."], correct: 2, explanation: "A charterholder may not make claims about how earning the designation proves superior capabilities." },
+            { id: 90, text: "Which of the following individuals may refer to himself or herself as a candidate in the CFA Program?", options: ["Bob passed Level II and intends to register for the next Level III exam.", "Ed has not yet attempted Level I but has registered for the next one.", "Jane received a passing score in January but is waiting until next year to register for Level II."], correct: 1, explanation: "To refer to oneself as a CFA candidate, an individual must be registered to sit for a CFA exam or waiting for results." },
+            { id: 91, text: "A Level II candidate posts blogs three days after the exam discussing topic areas she thought would be on the exam that were not. She is:", options: ["in violation for providing confidential information about the exam.", "not in violation because information was posted after the exam.", "not in violation because the information was about what was not on the exam."], correct: 0, explanation: "Standard VII(A) prohibits providing confidential information, including broad topical areas tested or not tested." },
+            { id: 92, text: "Business cards show: G. J. Anderson, CFA; B. K. Baker, Chartered Financial Analyst; M. S. Chang, C.F.A. Which uses CFA marks improperly?", options: ["Chang.", "Baker and Chang.", "Anderson and Chang."], correct: 0, explanation: "Periods should not be used to separate the letters CFA. Anderson and Baker use marks properly." },
+            { id: 93, text: "When Wes Smith joined a firm, he stated in letters to prospects that all analysts have the CFA designation, ensuring better service. This violates the Standard:", options: ["only because he may not tie the designation to guaranteed better service.", "both because he mentions the designation and ties it to guaranteed service.", "only because he mentions the designation in the letter."], correct: 0, explanation: "He cannot guarantee CFA charterholders will provide better service, but he can mention the fact that analysts have the designation." },
+            { id: 94, text: "Nancy Arnold states on her resume 'I will soon be awarded the CFA charter' and that she majored in finance (she majored in management). Arnold's statements violate:", options: ["only the Standard on reference to the CFA designation.", "only the Standard on misrepresentation.", "both the Standards on misrepresentation and reference to the CFA designation."], correct: 2, explanation: "Misstating her major violates misrepresentation. Stating she expects the charter is improper use of the designation." },
+
+            // Module 92 - GIPS (14 questions)
+            { id: 95, text: "Which of the following parties may adopt and claim compliance with GIPS?", options: ["A software firm that developed a package assisting investment firms in achieving GIPS compliance.", "The chief compliance officer for a regional money manager.", "An investment management firm located in Indonesia."], correct: 2, explanation: "Only an investment firm that actually manages assets can claim compliance with GIPS." },
+            { id: 96, text: "The section of GIPS that outlines defining the firm and documenting firm policies is:", options: ["Composite and Pooled Fund Maintenance.", "GIPS Advertising Guidelines.", "Fundamentals of Compliance."], correct: 2, explanation: "Section 1, Fundamentals of Compliance, defines the firm as the foundation for firm-wide compliance." },
+            { id: 97, text: "When measuring and presenting investment performance, GIPS compliant firms are required to:", options: ["include terminated accounts in their performance history.", "exclude time periods that are unrepresentative of the firm's performance.", "disclose the performance of the best-performing accounts in each composite."], correct: 0, explanation: "Excluding terminated accounts introduces survivorship bias, so GIPS requires firms to include these accounts." },
+            { id: 98, text: "The purpose of composites in a GIPS-compliant performance presentation is to:", options: ["clearly distinguish the entity presented to the public as a GIPS-compliant firm.", "provide information about a firm's performance in various asset classes or investment strategies.", "present overall firm performance in a single statistic comparable across firms."], correct: 1, explanation: "Composites give clients and prospects information about a firm's past performance in various asset classes or strategies." },
+            { id: 99, text: "Which of the following statements most accurately describes the requirements for GIPS verification?", options: ["A firm must select a representative set of composites for third-party GIPS verification.", "Third-party verification is required for a firm to claim compliance with GIPS.", "Verification of GIPS compliance is recommended, but not required."], correct: 2, explanation: "Verification is recommended but not required. If chosen, it must be performed by a third party on the entire firm." },
+            { id: 100, text: "When verifying GIPS compliance, the verifier must:", options: ["attest that the firm's processes and procedures are established to present performance in accordance with GIPS.", "clearly identify the composites for which verification has been performed.", "disclose whether verification was performed by internal auditors or a third party."], correct: 0, explanation: "The verifier must attest that processes and procedures are established to present performance in accordance with GIPS." },
+            { id: 101, text: "Which statement most accurately describes verification under GIPS?", options: ["GIPS verification is required for a firm to claim GIPS compliance.", "GIPS verification requires a verification report to be issued for the entire firm.", "GIPS verification requires verification of individual composites."], correct: 1, explanation: "A single verification report is issued for the entire firm; verification cannot be carried out for a single composite." },
+            { id: 102, text: "McGregor manages mostly fixed-income portfolios but also manages a few growth equity portfolios. Must these equity portfolios be included in a composite?", options: ["Yes, because the portfolios are discretionary.", "Yes, because the portfolios are managed to a widely recognized investment strategy.", "No, because the firm does not normally manage this strategy and does not promote it."], correct: 0, explanation: "GIPS require all discretionary portfolios to be included in a composite." },
+            { id: 103, text: "An investor does not permit her account manager to initiate trades on her behalf. Is the firm required to include this portfolio in their composite?", options: ["Yes, because the portfolio is consistent with the defined strategy for this composite.", "No, because constructing composites is voluntary.", "No, because the portfolio is non-discretionary."], correct: 2, explanation: "Because the owner restricts the firm from implementing its strategy, the firm should designate this as non-discretionary." },
+            { id: 104, text: "Paula sees these statements: 'The purpose of composites is to show how well a firm has performed managing different securities' and 'A portfolio should have one year of history before assignment to a composite.' With respect to both:", options: ["both are correct.", "both are incorrect.", "only one is correct."], correct: 2, explanation: "Statement 1 is correct. Statement 2 is incorrect - firms should identify which composite each portfolio will be in before performance is known." },
+            { id: 105, text: "A GIPS-compliant firm must do all of the following EXCEPT:", options: ["include all actual fee-paying discretionary portfolios in at least one composite.", "initially provide a compliant presentation covering a minimum of one year or since inception.", "provide information in GIPS advertisements about how to obtain a fully compliant presentation."], correct: 1, explanation: "Firms must provide at least five years of compliant history, or since inception if less than five years." },
+            { id: 106, text: "Which of the following statements concerning GIPS compliance is least accurate?", options: ["A firm may not claim partial compliance.", "Once a firm claims GIPS compliance, it must continue to comply with all GIPS requirements.", "A firm may choose which accounts it includes in a composite."], correct: 2, explanation: "A firm must include all actual discretionary portfolios in at least one composite. Cherry-picking is not allowed." },
+            { id: 107, text: "A firm claiming GIPS compliance may NOT:", options: ["exclude non-fee-paying accounts from composites.", "exclude certain portfolios from a composite to improve returns.", "exclude simulated or model portfolios from composites."], correct: 1, explanation: "Firms must include all relevant discretionary portfolios; excluding poor performers is cherry-picking and violates GIPS." },
+            { id: 108, text: "Which of the following statements about GIPS is most accurate?", options: ["GIPS are voluntary but firms should not claim compliance unless verified.", "GIPS are voluntary and apply to real estate and private equity in addition to traditional asset classes.", "Firms that misrepresent compliance with GIPS can be sued by CFA Institute."], correct: 1, explanation: "GIPS are voluntary and cover traditional assets, real estate, and private equity. Verification is recommended but not required." }
+        ];
+
+        // State variables
+        let currentQuestion = 0;
+        let userAnswers = {};
+        let testStartTime = null;
+        let testInterval = null;
+        let showingResults = false;
+        let currentTestQuestions = [];
+        let selectedTestSet = 0;
+
+        // Shuffle array function
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Get 20 random questions from the pool
+        function getRandomQuestions(testSetNumber) {
+            // Seed the random selection based on test set number for consistency
+            // But shuffle them each time
+            const shuffled = shuffleArray(allQuestions);
+            return shuffled.slice(0, 20);
+        }
+
+        // Theme Toggle
+        function toggleTheme() { 
+            document.body.classList.toggle('light-mode'); 
+        }
+
+        // Open About Modal
+        function openAbout() { 
+            document.getElementById('aboutModal').style.display = 'flex'; 
+        }
+
+        // Open Calendar Modal
+        function openCalendar() { 
+            document.getElementById('calModal').style.display = 'flex'; 
+            document.getElementById('calDate').innerText = new Date().toDateString();
+            document.getElementById('calTitle').innerText = new Date().toLocaleString('default', { month: 'long' });
+        }
+
+        // Close All Modals
+        function closeModals() { 
+            document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); 
+        }
+
+        // Start Test Function
+        function startTest(testSetNumber) {
+            selectedTestSet = testSetNumber;
+            currentTestQuestions = getRandomQuestions(testSetNumber);
+            currentQuestion = 0;
+            userAnswers = {};
+            
+            // Hide instructions and selection
+            document.getElementById('instructions').style.display = 'none';
+            document.querySelector('.test-selection-section').style.display = 'none';
+            document.querySelector('.test-stats').style.display = 'none';
+            
+            // Show questions section
+            document.getElementById('questionsSection').style.display = 'block';
+            
+            // Add timer display
+            let timerDiv = document.getElementById('timerDisplay');
+            if (!timerDiv) {
+                timerDiv = document.createElement('div');
+                timerDiv.id = 'timerDisplay';
+                timerDiv.className = 'timer-display';
+                timerDiv.innerHTML = '<i class="fas fa-clock"></i><span class="timer-text" id="timer">30:00</span>';
+                document.body.appendChild(timerDiv);
+            } else {
+                timerDiv.style.display = 'flex';
+                document.getElementById('timer').textContent = '30:00';
+            }
+            
+            // Start timer (30 minutes = 1800 seconds)
+            testStartTime = Date.now();
+            startTimer(1800);
+            
+            // Load questions
+            loadQuestions();
+        }
+
+        // Timer Function
+        function startTimer(duration) {
+            if (testInterval) {
+                clearInterval(testInterval);
+            }
+            
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('timer');
+            
+            testInterval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(testInterval);
+                    alert('Time is up! Submitting your test...');
+                    submitTest();
+                }
+            }, 1000);
+        }
+
+        // Load Questions Function
+        function loadQuestions() {
+            displayQuestion(currentQuestion);
+        }
+
+        // Display Single Question
+        function displayQuestion(index) {
+            const questionsSection = document.getElementById('questionsSection');
+            const question = currentTestQuestions[index];
+            
+            const html = `
+                <div class="question-container">
+                    <div class="question-header">
+                        <h3>Question ${index + 1} of ${currentTestQuestions.length}</h3>
+                        <div class="question-progress">
+                            <div class="progress-bar-container">
+                                <div class="progress-fill" style="width: ${((index + 1) / currentTestQuestions.length) * 100}%"></div>
+                            </div>
+                            <span>${index + 1}/${currentTestQuestions.length}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="question-text">
+                        <p>${question.text}</p>
+                    </div>
+                    
+                    <div class="options-container">
+                        ${question.options.map((option, i) => `
+                            <div class="option ${userAnswers[question.id] === i ? 'selected' : ''}" 
+                                 onclick="selectAnswer(${question.id}, ${i})">
+                                <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                                <span class="option-text">${option}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="question-navigation">
+                        <button class="nav-button" onclick="previousQuestion()" ${index === 0 ? 'disabled' : ''}>
+                            <i class="fas fa-arrow-left"></i> Previous
+                        </button>
+                        <button class="nav-button primary" onclick="nextQuestion()">
+                            ${index === currentTestQuestions.length - 1 ? 'Review Answers' : 'Next'} <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            questionsSection.innerHTML = html;
+        }
+
+        // Select Answer
+        function selectAnswer(questionId, optionIndex) {
+            userAnswers[questionId] = optionIndex;
+            displayQuestion(currentQuestion);
+        }
+
+        // Previous Question
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                displayQuestion(currentQuestion);
+            }
+        }
+
+        // Next Question
+        function nextQuestion() {
+            if (currentQuestion < currentTestQuestions.length - 1) {
+                currentQuestion++;
+                displayQuestion(currentQuestion);
+            } else {
+                showReview();
+            }
+        }
+
+        // Show Review Screen
+        function showReview() {
+            const questionsSection = document.getElementById('questionsSection');
+            const answered = Object.keys(userAnswers).length;
+            const unanswered = currentTestQuestions.length - answered;
+            
+            const html = `
+                <div class="review-container">
+                    <h2>Review Your Answers</h2>
+                    <div class="review-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">${answered}</div>
+                            <div class="stat-label">Answered</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">${unanswered}</div>
+                            <div class="stat-label">Unanswered</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question-grid">
+                        ${currentTestQuestions.map((q, i) => `
+                            <div class="question-number ${userAnswers[q.id] !== undefined ? 'answered' : 'unanswered'}" 
+                                 onclick="jumpToQuestion(${i})">
+                                ${i + 1}
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    <div class="review-actions">
+                        <button class="nav-button" onclick="currentQuestion = 0; displayQuestion(0);">
+                            <i class="fas fa-arrow-left"></i> Back to Questions
+                        </button>
+                        <button class="nav-button primary" onclick="confirmSubmit()">
+                            <i class="fas fa-check-circle"></i> Submit Test
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            questionsSection.innerHTML = html;
+        }
+
+        // Jump to Question
+        function jumpToQuestion(index) {
+            currentQuestion = index;
+            displayQuestion(index);
+        }
+
+        // Confirm Submit
+        function confirmSubmit() {
+            const answered = Object.keys(userAnswers).length;
+            const unanswered = currentTestQuestions.length - answered;
+            
+            if (unanswered > 0) {
+                if (!confirm(`You have ${unanswered} unanswered questions. Are you sure you want to submit?`)) {
+                    return;
+                }
+            }
+            
+            submitTest();
+        }
+
+        // Submit Test Function
+        function submitTest() {
+            if (testInterval) {
+                clearInterval(testInterval);
+            }
+            
+            // Hide timer
+            const timerDisplay = document.getElementById('timerDisplay');
+            if (timerDisplay) {
+                timerDisplay.style.display = 'none';
+            }
+            
+            // Calculate results
+            let correct = 0;
+            let incorrect = 0;
+            let unanswered = 0;
+            
+            currentTestQuestions.forEach(q => {
+                if (userAnswers[q.id] === undefined) {
+                    unanswered++;
+                } else if (userAnswers[q.id] === q.correct) {
+                    correct++;
+                } else {
+                    incorrect++;
+                }
+            });
+            
+            const score = ((correct / currentTestQuestions.length) * 100).toFixed(1);
+            const timeSpent = testStartTime ? Math.floor((Date.now() - testStartTime) / 1000) : 0;
+            
+            showResults(correct, incorrect, unanswered, score, timeSpent);
+        }
+
+        // Show Results
+        function showResults(correct, incorrect, unanswered, score, timeSpent) {
+            showingResults = true;
+            const questionsSection = document.getElementById('questionsSection');
+            
+            const minutes = Math.floor(timeSpent / 60);
+            const seconds = timeSpent % 60;
+            const timeString = `${minutes}m ${seconds}s`;
+            
+            const passed = score >= 70;
+            
+            const html = `
+                <div class="results-container">
+                    <h2>Test Set ${selectedTestSet} - Results</h2>
+                    <div class="result-status ${passed ? 'passed' : 'failed'}">
+                        <i class="fas fa-${passed ? 'check-circle' : 'times-circle'}"></i>
+                        <h3>${passed ? 'Congratulations! You Passed!' : 'Keep Studying!'}</h3>
+                        <p class="score-display">${score}%</p>
+                    </div>
+                    
+                    <div class="result-stats">
+                        <div class="stat-card"><div class="stat-number" style="color: var(--vibrant-green);">${correct}</div><div class="stat-label">Correct</div></div>
+                        <div class="stat-card"><div class="stat-number" style="color: #ef4444;">${incorrect}</div><div class="stat-label">Incorrect</div></div>
+                        <div class="stat-card"><div class="stat-number" style="color: var(--text-muted);">${unanswered}</div><div class="stat-label">Unanswered</div></div>
+                        <div class="stat-card"><div class="stat-number">${timeString}</div><div class="stat-label">Time Spent</div></div>
+                    </div>
+                    
+                    <div class="review-actions">
+                        <button class="nav-button primary" onclick="showDetailedReview()">
+                            <i class="fas fa-list"></i> Review Answers with Explanations
+                        </button>
+                        <button class="nav-button" onclick="location.reload()">
+                            <i class="fas fa-home"></i> Back to Home
+                        </button>
+                        <button class="nav-button" onclick="retakeTest()">
+                            <i class="fas fa-redo"></i> Retake This Test
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            questionsSection.innerHTML = html;
+        }
+
+        // Retake Test
+        function retakeTest() {
+            startTest(selectedTestSet);
+        }
+
+        // Show Detailed Review
+        function showDetailedReview() {
+            const questionsSection = document.getElementById('questionsSection');
+            
+            const html = `
+                <div class="detailed-review">
+                    <h2>Test Set ${selectedTestSet} - Detailed Review</h2>
+                    ${currentTestQuestions.map((q, index) => {
+                        const userAnswer = userAnswers[q.id];
+                        const isCorrect = userAnswer === q.correct;
+                        const wasAnswered = userAnswer !== undefined;
+                        
+                        return `
+                            <div class="review-question ${isCorrect ? 'correct' : wasAnswered ? 'incorrect' : 'unanswered'}">
+                                <div class="review-header">
+                                    <h4>Question ${index + 1}</h4>
+                                    <span class="review-badge">
+                                        ${isCorrect ? '<i class="fas fa-check-circle"></i> Correct' : 
+                                          wasAnswered ? '<i class="fas fa-times-circle"></i> Incorrect' : 
+                                          '<i class="fas fa-minus-circle"></i> Unanswered'}
+                                    </span>
+                                </div>
+                                <p class="review-text">${q.text}</p>
+                                <div class="review-options">
+                                    ${q.options.map((opt, i) => `
+                                        <div class="review-option ${i === q.correct ? 'correct-answer' : ''} ${i === userAnswer ? 'user-answer' : ''}">
+                                            <span class="option-letter">${String.fromCharCode(65 + i)}</span>
+                                            <span>${opt}</span>
+                                            ${i === q.correct ? '<i class="fas fa-check"></i>' : ''}
+                                            ${i === userAnswer && i !== q.correct ? '<i class="fas fa-times"></i>' : ''}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div class="explanation">
+                                    <strong>Explanation:</strong> ${q.explanation}
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                    
+                    <div class="review-actions" style="margin-top: 2rem;">
+                        <button class="nav-button" onclick="location.reload()">
+                            <i class="fas fa-home"></i> Back to Home
+                        </button>
+                        <button class="nav-button primary" onclick="retakeTest()">
+                            <i class="fas fa-redo"></i> Retake This Test
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            questionsSection.innerHTML = html;
+        }
+
+        // PROGRESS BAR & ACTIVE SECTION LOGIC
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.height = scrolled + "%";
+
+            // Highlight active link in sidebar
+            const sections = document.querySelectorAll('section, .doc-header');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 120) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('data-section') === current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
