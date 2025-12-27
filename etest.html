@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -806,7 +806,7 @@
 
     <!-- TOP CONTROLS -->
     <div class="nav-controls">
-        <a href="index.html" class="ctrl-btn" title="Home">
+        <a href="#" onclick="return confirmNavigation('dashboard.html')" class="ctrl-btn" title="Home">
             <i class="fas fa-home"></i>
         </a>
         <div class="ctrl-btn" onclick="toggleTheme()" title="Toggle Theme">
@@ -947,6 +947,24 @@
             <p id="calDate" style="font-weight: 800; margin-bottom: 1.5rem;"></p>
             <textarea style="width:100%; height:80px; padding:10px; border: 1px solid var(--border-color); color:inherit; background:transparent; border-radius: 6px;" placeholder="Enter notes..."></textarea>
             <div onclick="closeModals()" style="margin-top: 1rem; cursor: pointer; color: var(--vibrant-green); font-weight: 800;">[ SAVE ]</div>
+        </div>
+    </div>
+
+    <!-- WARNING MODAL -->
+    <div class="modal-overlay" id="warningModal" style="z-index: 9999;">
+        <div class="modal-box" onclick="event.stopPropagation()" style="max-width: 500px; text-align: center;">
+            <div style="font-size: 4rem; color: #ef4444; margin-bottom: 1rem;">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 style="color: #ef4444; margin-bottom: 1rem;">Warning!</h2>
+            <p style="line-height: 1.8; margin-bottom: 2rem; color: var(--text-muted);">
+                Your test is in progress. If you refresh or leave this page, all your progress and answers will be lost!
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button onclick="closeWarning()" style="padding: 1rem 2rem; background: var(--vibrant-green); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
+                    Continue Test
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1117,6 +1135,32 @@
         // Close All Modals
         function closeModals() { 
             document.querySelectorAll('.modal-overlay').forEach(m => m.style.display = 'none'); 
+        }
+
+        // Close Warning Modal
+        function closeWarning() {
+            document.getElementById('warningModal').style.display = 'none';
+        }
+
+        // Show warning if user tries to navigate away during test
+        function showNavigationWarning() {
+            if (currentTestQuestions.length > 0 && !showingResults) {
+                document.getElementById('warningModal').style.display = 'flex';
+                return false;
+            }
+            return true;
+        }
+
+        // Confirm navigation with warning
+        function confirmNavigation(url) {
+            if (currentTestQuestions.length > 0 && !showingResults) {
+                if (confirm('Warning: Your test progress will be lost if you leave this page. Are you sure you want to continue?')) {
+                    window.location.href = url;
+                }
+                return false;
+            }
+            window.location.href = url;
+            return false;
         }
 
         // Start Test Function
@@ -1453,6 +1497,16 @@
             
             questionsSection.innerHTML = html;
         }
+
+        // Warn user before leaving/refreshing page during test
+        window.addEventListener('beforeunload', function (e) {
+            // Only show warning if test is in progress (not on start screen or results screen)
+            if (currentTestQuestions.length > 0 && !showingResults) {
+                e.preventDefault();
+                e.returnValue = ''; // Chrome requires returnValue to be set
+                return 'Warning: Your test progress will be lost if you leave this page. Are you sure you want to continue?';
+            }
+        });
 
         // PROGRESS BAR & ACTIVE SECTION LOGIC
         window.addEventListener('scroll', () => {
